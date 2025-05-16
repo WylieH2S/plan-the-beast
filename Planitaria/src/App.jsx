@@ -16,7 +16,8 @@ export default function App() {
       <OverlayLayer />
       <SafeZoneOverlay />
       <StatisticsPanel />
-      <TutorialPrompt />
+      {/* Only render the prompt when it’s actually needed */}
+      {TutorialPrompt && <TutorialPrompt />}
     </div>
   );
 }
