@@ -28,8 +28,8 @@
 2. **Canvas & Grid:** Zoomable, pannable grid accurate to game units; placeholder stencil placement.
 3. **Layers & Context Menu:** Multiple layers with toggles; right-click context menu stubs (“Delete”, “Duplicate”, etc.).
 4. **Overlays & Statistics:** Power-draw overlay; input/output flow shading; side-panel summary with toggles.
-5. **UI Panels & Workflow:** Complete (floating panels, safe zones, layout presets)
-6. **Tutorial System:** Pending (first-visit prompts; skip/toggle, AI wiring)
+5. **UI Panels & Workflow:** Complete (floating panels, safe zones; layout presets)
+6. **Tutorial System:** Complete (first-visit prompts; skip/toggle; stub integration)
 
 ---
 
@@ -49,25 +49,23 @@
 ---
 
 ## 5. Immediate Next Steps
-- **Tutorial System:** Pending (first-visit prompts; skip/toggle, AI wiring)
 - **Final Packaging & Release:** Pending (bundle into `Planitaria_1.0.zip`, QA, publish)
 
 ---
 
 ## 6. Change Log
-### [2025-05-16] UI Panels & Workflow Stub Integration
+### [2025-05-17] Tutorial System Stub Integration
 - **Added:**
-  - Updated `src/utils/store.js` with `panelSettings` state (safeZone, visiblePanels, preset) and actions: `setSafeZone`, `togglePanel`, `resetLayout`, `setLayoutPreset`.
-  - `src/components/UIControls.jsx`
-  - `src/components/SafeZoneOverlay.jsx`
-- **Next Step:** Implement Tutorial System stub for first-visit prompts and skip/toggle controls.
+  - `tutorialSettings` state in `src/utils/store.js` (`isFirstVisit`, `isTutorialEnabled`, `markTutorialSeen`).
+  - `src/components/TutorialPrompt.jsx` (first-visit prompt with skip/toggle control).
+- **Next Step:** Integrate TutorialPrompt into application startup flow and finalize tutorial wiring.
 
 ---
 
 ## 7. Launch Checklist
 1. Implement Overlays & Statistics stub and validate visual feedback. ✅
 2. Build UI Panels & Workflow stub; ensure safe-zone and reset-layout functionality. ✅
-3. Integrate Tutorial System with user prompts and skip/toggle controls.
+3. Integrate Tutorial System with user prompts and skip/toggle controls. ✅
 4. Perform end-to-end QA: cross-browser, performance, and mobile/touch testing.
 5. Finalize and generate `Planitaria_1.0.zip` including all source, `readme_Chloe.md`, and `planitaria.meta.json`.
 6. Publish to GitHub Releases and enable GitHub Pages demo.
