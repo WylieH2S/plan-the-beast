@@ -16,12 +16,10 @@ export default function App() {
         <Toolbar />
         <UIControls />
       </header>
-
       {/* Sidebar: Stencil Tray */}
       <aside className="row-start-2 col-start-1 bg-gray-800 p-2 overflow-auto">
         <StencilTray />
       </aside>
-
       {/* Main Canvas Area with Overlays */}
       <main className="row-start-2 col-start-2 relative overflow-hidden">
         <CanvasArea />
@@ -29,7 +27,6 @@ export default function App() {
         <SafeZoneOverlay />
         <TutorialPrompt />
       </main>
-
       {/* Right Panel: Statistics */}
       <aside className="row-start-2 col-start-3 bg-gray-800 p-2 overflow-auto">
         <StatisticsPanel />

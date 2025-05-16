@@ -28,7 +28,7 @@
 2. **Canvas & Grid:** Zoomable, pannable grid accurate to game units; placeholder stencil placement.
 3. **Layers & Context Menu:** Multiple layers with toggles; right-click context menu stubs (“Delete”, “Duplicate”, etc.).
 4. **Overlays & Statistics:** Power-draw overlay; input/output flow shading; side-panel summary with toggles.
-5. **UI Panels & Workflow:** Complete (floating panels, safe zones; layout presets)
+5. **UI Panels & Workflow:** Complete (floating panels, safe zones, layout presets)
 6. **Tutorial System:** Complete (first-visit prompts; skip/toggle; stub integration)
 
 ---
@@ -56,9 +56,10 @@
 ## 6. Change Log
 ### [2025-05-17] Tutorial System Stub Integration
 - **Added:**
-  - `tutorialSettings` state in `src/utils/store.js` (`isFirstVisit`, `isTutorialEnabled`, `markTutorialSeen`).
+  - `tutorialSettings` state in `src/utils/store.js` (`isFirstVisit`, `isTutorialEnabled`, `markTutorialSeen`, `toggleTutorial`).
   - `src/components/TutorialPrompt.jsx` (first-visit prompt with skip/toggle control).
-- **Next Step:** Integrate TutorialPrompt into application startup flow and finalize tutorial wiring.
+- **Updated:** App.jsx to include all core components in layout grid.
+- **Next Step:** Perform end-to-end QA and finalize packaging.
 
 ---
 
