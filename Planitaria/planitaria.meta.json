@@ -1,4 +1,8 @@
 {
-  "version": "1.0-github-ready",
-  "timestamp": "2025-05-15T23:02:42-04:00"
+  "name": "Planitaria",
+  "version": "1.0.0",
+  "buildDate": "2025-05-15T00:00:00Z",
+  "readme": "readme_Chloe.md",
+  "manifestHash": "<SHA256 hash of readme_Chloe.md>",
+  "notes": "Core build 1.0 including canvas stub, save/load stub, and context menu stub."
 }
