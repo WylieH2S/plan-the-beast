@@ -1,4 +1,3 @@
-
 # readme_Chloe.md
 
 ## 🌱 Planitaria Chloe Continuity Log & Protocol
@@ -29,7 +28,6 @@ This file is the *persistent, authoritative log and guidance system* for Planita
 - **Instructions:**  
   - Click any stencil to select (yellow highlight).
   - Use Delete button in toolbar to remove.
-  - Dragging and adding stencils work as before.
   - Selection clears on canvas background click.
 - **Next Step:**  
     - Integrate saving and loading layouts, and optionally overlays/statistics logic.
@@ -75,3 +73,4 @@ If you pick up work from here, read this file fully before changing architecture
 3. All future AI/human contributors: *read, update, and honor these protocols and logs.*
 
 ---
+
