@@ -1,8 +1,6 @@
 {
   "name": "Planitaria",
-  "version": "1.0.0",
-  "buildDate": "2025-05-17T00:00:00Z",
-  "readme": "readme_Chloe.md",
-  "manifestHash": "<SHA256 hash of readme_Chloe.md>",
-  "notes": "Core build v1.0 with all stubs and layout."
+  "version": "1.0-premerge",
+  "date": "2025-05-15",
+  "integrity": "Pending final build"
 }
