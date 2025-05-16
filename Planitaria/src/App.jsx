@@ -1,7 +1,7 @@
 import React from 'react';
 import Toolbar from '@/components/Toolbar';
-import UIControls from '@/components/UIControls';
 import StencilTray from '@/components/StencilTray';
+import UIControls from '@/components/UIControls';
 import CanvasArea from '@/components/CanvasArea';
 import OverlayLayer from '@/components/OverlayLayer';
 import SafeZoneOverlay from '@/components/SafeZoneOverlay';
@@ -10,28 +10,30 @@ import TutorialPrompt from '@/components/TutorialPrompt';
 
 export default function App() {
   return (
-    <div className="app-container relative bg-gray-900 min-h-screen overflow-hidden">
-      {/* Header: toolbar and controls */}
-      <header className="absolute top-0 left-0 right-0 z-20 bg-gray-800 p-2 flex items-center space-x-4">
+    <div className="app-container grid grid-rows-[auto_1fr] grid-cols-[200px_1fr_250px] h-screen bg-gray-900">
+      {/* Header: Toolbar + Controls */}
+      <header className="row-start-1 col-span-3 flex items-center bg-gray-800 p-2 space-x-4 shadow">
         <Toolbar />
         <UIControls />
       </header>
 
-      {/* Sidebar: stencil tray */}
-      <aside className="absolute top-16 left-2 z-20">
+      {/* Sidebar: Stencil Tray */}
+      <aside className="row-start-2 col-start-1 bg-gray-800 p-2 overflow-auto">
         <StencilTray />
       </aside>
 
-      {/* Main canvas and overlays */}
-      <main className="relative pt-16">
+      {/* Main Canvas Area with Overlays */}
+      <main className="row-start-2 col-start-2 relative overflow-hidden">
         <CanvasArea />
         <OverlayLayer />
         <SafeZoneOverlay />
-        <StatisticsPanel />
+        <TutorialPrompt />
       </main>
 
-      {/* Tutorial overlay */}
-      <TutorialPrompt />
+      {/* Right Panel: Statistics */}
+      <aside className="row-start-2 col-start-3 bg-gray-800 p-2 overflow-auto">
+        <StatisticsPanel />
+      </aside>
     </div>
   );
 }
