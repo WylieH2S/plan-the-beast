@@ -8,7 +8,7 @@ export const useStore = create((set) => ({
   },
   layers: [1, 2],
   activeLayer: 1,
-  setActiveLayer: (layer) => set((state) => ({ activeLayer: layer })),
+  setActiveLayer: (layer) => set({ activeLayer: layer }),
   addStencil: (stencil) =>
     set((state) => ({
       canvas: {
@@ -18,4 +18,8 @@ export const useStore = create((set) => ({
     })),
   setZoom: (zoom) => set((state) => ({ canvas: { ...state.canvas, zoom } })),
   setPan: (pan) => set((state) => ({ canvas: { ...state.canvas, pan } })),
+  overlaySettings: { enablePowerDraw: false },
+  setOverlaySettings: (settings) => set({ overlaySettings: settings }),
+  stats: { totalPower: 0, totalThroughput: 0 },
+  setStats: (stats) => set({ stats }),
 }));

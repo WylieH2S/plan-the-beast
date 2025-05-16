@@ -49,10 +49,14 @@
 ---
 
 ## 5. Immediate Next Steps
-- **Project Setup:** Finalize build pipeline (Vite/Webpack) to output complete ZIP.
-- **Implement Save/Load:** Wire download/upload of JSON state.
-- **Canvas & Grid Stub:** Basic rendering and stencil placement.
-- **Layer/Context Menu Stub:** Two layers; stub menu entries.
+- **Project Setup:** Complete (Vite/Webpack pipeline & ZIP packaging)
+- **Save/Load Implementation:** Complete (download/upload JSON state handlers)
+- **Canvas & Grid Stub:** Complete (zoomable/pannable grid & placeholder stencils)
+- **Layer & Context-Menu Stub:** Complete (multi-layer toggles & right-click stubs)
+- **Overlays & Statistics Stub:** Complete (power-draw overlay & side-panel summary)
+- **UI Panels & Workflow Stub:** Pending (floating panels, safe zones, layout presets)
+- **Tutorial System:** Pending (first-visit prompts, skip/toggle, AI wiring)
+- **Final Packaging & Release:** Pending (bundle into `Planitaria_1.0.zip`, QA, publish)
 
 ---
 
@@ -84,9 +88,50 @@
   - `store.js`, `CanvasArea.jsx`, `Toolbar.jsx`
 - **Next Step:** Integrate saving/loading layouts and overlays/statistics.
 
+### [2025-05-15] Save/Load Controls Integration
+- **Added:**
+  - `src/components/SaveLoadControls.jsx`
+  - `src/components/Toolbar.jsx` (with SaveLoadControls integrated)
+- **Next Step:** Test and validate Save/Load functionality; proceed to Canvas & Grid stub.
+
+### [2025-05-15] Canvas & Grid Stub Integration
+- **Added:**
+  - `src/utils/store.js`
+  - `src/components/CanvasGrid.jsx`
+  - `src/components/CanvasArea.jsx`
+- **Next Step:** Implement Layers & Context-Menu stub for multi-layer toggles and right-click actions.
+
+### [2025-05-15] Layers & Context-Menu Stub Integration
+- **Added:**
+  - `src/components/LayerControls.jsx`
+  - `src/components/ContextMenu.jsx`
+  - Updated `src/utils/store.js` to include `layers`, `activeLayer`, and `setActiveLayer` state.
+- **Next Step:** Integrate layer toggles into the Toolbar and bind context-menu actions in CanvasGrid.
+
+### [2025-05-16] Core 1.0 Stub Completion
+- **Status:** All four core stubs (Project Setup, Save/Load, Canvas & Grid, Layers & Context-Menu) have been implemented.
+- **Next Step:** Implement Overlays & Statistics stub for visual overlays and summaries.
+
+### [2025-05-16] Overlays & Statistics Stub Integration
+- **Added:**
+  - Updated `src/utils/store.js` to add `overlaySettings` and `stats` state.
+  - `src/components/OverlayLayer.jsx`
+  - `src/components/StatisticsPanel.jsx`
+- **Next Step:** Build UI Panels & Workflow stub for floating panels and presets.
+
 ---
 
-## 7. Current Project Priorities
+## 7. Launch Checklist
+1. Implement Overlays & Statistics stub and validate visual feedback. ✅
+2. Build UI Panels & Workflow stub; ensure safe-zone and reset-layout functionality.
+3. Integrate Tutorial System with user prompts and skip/toggle controls.
+4. Perform end-to-end QA: cross-browser, performance, and mobile/touch testing.
+5. Finalize and generate `Planitaria_1.0.zip` including all source, `readme_Chloe.md`, and `planitaria.meta.json`.
+6. Publish to GitHub Releases and enable GitHub Pages demo.
+
+---
+
+## 8. Current Project Priorities
 1. Maintain `readme_Chloe.md` as the living continuity manifest.
 2. Each push/commit **MUST** update this file.
 3. All contributors must read, update, and honor these protocols and logs.
