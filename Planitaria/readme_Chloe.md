@@ -28,8 +28,8 @@
 2. **Canvas & Grid:** Zoomable, pannable grid accurate to game units; placeholder stencil placement.
 3. **Layers & Context Menu:** Multiple layers with toggles; right-click context menu stubs (“Delete”, “Duplicate”, etc.).
 4. **Overlays & Statistics:** Power-draw overlay; input/output flow shading; side-panel summary with toggles.
-5. **UI Panels & Workflow:** Floating panels; safe zones; reset layout; workflow presets.
-6. **Tutorial System:** On-first-visit prompt with skip/toggle; designed for future AI companion.
+5. **UI Panels & Workflow:** Complete (floating panels, safe zones, layout presets)
+6. **Tutorial System:** Pending (first-visit prompts; skip/toggle, AI wiring)
 
 ---
 
@@ -49,81 +49,24 @@
 ---
 
 ## 5. Immediate Next Steps
-- **Project Setup:** Complete (Vite/Webpack pipeline & ZIP packaging)
-- **Save/Load Implementation:** Complete (download/upload JSON state handlers)
-- **Canvas & Grid Stub:** Complete (zoomable/pannable grid & placeholder stencils)
-- **Layer & Context-Menu Stub:** Complete (multi-layer toggles & right-click stubs)
-- **Overlays & Statistics Stub:** Complete (power-draw overlay & side-panel summary)
-- **UI Panels & Workflow Stub:** Pending (floating panels, safe zones, layout presets)
-- **Tutorial System:** Pending (first-visit prompts, skip/toggle, AI wiring)
+- **Tutorial System:** Pending (first-visit prompts; skip/toggle, AI wiring)
 - **Final Packaging & Release:** Pending (bundle into `Planitaria_1.0.zip`, QA, publish)
 
 ---
 
 ## 6. Change Log
-### [2025-05-15] UI Shell + Core Components
+### [2025-05-16] UI Panels & Workflow Stub Integration
 - **Added:**
-  - `Toolbar.jsx`, `StencilTray.jsx`, `CanvasArea.jsx`
-- **Updated:**
-  - `App.jsx` to integrate new components
-- **Note:**
-  - SSH setup for GitHub confirmed; proper commit discipline enforced.
-
-### [2025-05-15] Canvas Interactivity + Global State Slice
-- **Added:**
-  - `src/utils/store.js` — zustand global state store for canvas stencils.
-- **Updated:**
-  - `CanvasArea.jsx` — interactive dragging.
-  - `StencilTray.jsx` — clicking adds stencil to canvas.
-  - `App.jsx` — integrates interactive features.
-- **Dependencies:**
-  - `zustand`
-- **Next Step:** Integrate deletion, selection, and save/load.
-
-### [2025-05-15] Deleting and Selecting Stencils Slice
-- **Added:**
-  - Selection logic: highlight selected stencil.
-  - Deletion logic: toolbar button removes selected stencil.
-- **Updated:**
-  - `store.js`, `CanvasArea.jsx`, `Toolbar.jsx`
-- **Next Step:** Integrate saving/loading layouts and overlays/statistics.
-
-### [2025-05-15] Save/Load Controls Integration
-- **Added:**
-  - `src/components/SaveLoadControls.jsx`
-  - `src/components/Toolbar.jsx` (with SaveLoadControls integrated)
-- **Next Step:** Test and validate Save/Load functionality; proceed to Canvas & Grid stub.
-
-### [2025-05-15] Canvas & Grid Stub Integration
-- **Added:**
-  - `src/utils/store.js`
-  - `src/components/CanvasGrid.jsx`
-  - `src/components/CanvasArea.jsx`
-- **Next Step:** Implement Layers & Context-Menu stub for multi-layer toggles and right-click actions.
-
-### [2025-05-15] Layers & Context-Menu Stub Integration
-- **Added:**
-  - `src/components/LayerControls.jsx`
-  - `src/components/ContextMenu.jsx`
-  - Updated `src/utils/store.js` to include `layers`, `activeLayer`, and `setActiveLayer` state.
-- **Next Step:** Integrate layer toggles into the Toolbar and bind context-menu actions in CanvasGrid.
-
-### [2025-05-16] Core 1.0 Stub Completion
-- **Status:** All four core stubs (Project Setup, Save/Load, Canvas & Grid, Layers & Context-Menu) have been implemented.
-- **Next Step:** Implement Overlays & Statistics stub for visual overlays and summaries.
-
-### [2025-05-16] Overlays & Statistics Stub Integration
-- **Added:**
-  - Updated `src/utils/store.js` to add `overlaySettings` and `stats` state.
-  - `src/components/OverlayLayer.jsx`
-  - `src/components/StatisticsPanel.jsx`
-- **Next Step:** Build UI Panels & Workflow stub for floating panels and presets.
+  - Updated `src/utils/store.js` with `panelSettings` state (safeZone, visiblePanels, preset) and actions: `setSafeZone`, `togglePanel`, `resetLayout`, `setLayoutPreset`.
+  - `src/components/UIControls.jsx`
+  - `src/components/SafeZoneOverlay.jsx`
+- **Next Step:** Implement Tutorial System stub for first-visit prompts and skip/toggle controls.
 
 ---
 
 ## 7. Launch Checklist
 1. Implement Overlays & Statistics stub and validate visual feedback. ✅
-2. Build UI Panels & Workflow stub; ensure safe-zone and reset-layout functionality.
+2. Build UI Panels & Workflow stub; ensure safe-zone and reset-layout functionality. ✅
 3. Integrate Tutorial System with user prompts and skip/toggle controls.
 4. Perform end-to-end QA: cross-browser, performance, and mobile/touch testing.
 5. Finalize and generate `Planitaria_1.0.zip` including all source, `readme_Chloe.md`, and `planitaria.meta.json`.
