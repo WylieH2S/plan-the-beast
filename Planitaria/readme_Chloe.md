@@ -90,4 +90,3 @@
 1. Maintain `readme_Chloe.md` as the living continuity manifest.
 2. Each push/commit **MUST** update this file.
 3. All contributors must read, update, and honor these protocols and logs.
-
