@@ -1,76 +1,93 @@
 # readme_Chloe.md
 
-## 🌱 Planitaria Chloe Continuity Log & Protocol
+> **Living Project Manifest & Continuity Protocol for Planitaria**
 
-**Purpose:**  
-This file is the *persistent, authoritative log and guidance system* for Planitaria, maintained for both human and AI continuity. It is updated **with every push, feature slice, and architectural change**.
+**Purpose:** This file is the *persistent, authoritative, append-only manifest* and guidance system for Planitaria 1.0 and beyond. It records every core decision, feature priority, roadmap milestone, and file change (with timestamp and hash) needed to reconstruct and verify the application. It must travel with every build (in `planitaria.meta.json` and application ZIP) and never be overwritten, omitted, or cleared.
 
 **Instructions for AI/Chloe:**
-- ALWAYS update this file with each code contribution or feature slice.
-- Log all changes in detail, including filenames, feature context, and architectural notes.
-- State the *next intended step* or priority at the end of each entry.
-- Preserve prior log entries; never delete history.
-- Update this housekeeping section if instructions for file management or AI protocol change.
+- **ALWAYS** update this file with each code contribution, feature slice, architectural change, or documentation update.
+- **Log** all changes in detail: include filenames, feature context, architectural notes, timestamps, and file hashes.
+- **State** the *next intended step* or priority at the end of each entry.
+- **Preserve** all prior log entries; never delete or alter history.
+- **Include** `planitaria.meta.json` alongside this file in every build.
+- **Verify** the integrity of this file and referenced hashes on application load.
+- **Update** this housekeeping section if protocols change.
 
 ---
 
-## 📅 Change Log
-
-### [2025-05-15] Deleting and Selecting Stencils Slice
-
-- **Added:**  
-  - Selection logic: stencils can now be selected (highlighted on canvas).
-  - Deletion logic: toolbar "Delete" button removes selected stencil.
-- **Updated:**  
-  - `src/utils/store.js` — now supports `selectedId`, `selectStencil`, `deleteSelected`.
-  - `src/components/CanvasArea.jsx` — supports click to select/highlight, unselect, and click-to-select any stencil.
-  - `src/components/Toolbar.jsx` — delete button now appears (enabled/disabled based on selection).
-- **Instructions:**  
-  - Click any stencil to select (yellow highlight).
-  - Use Delete button in toolbar to remove.
-  - Selection clears on canvas background click.
-- **Next Step:**  
-    - Integrate saving and loading layouts, and optionally overlays/statistics logic.
-    - Always update this file with clear intentions for the next slice.
+## 1. Core Purpose & Principles
+- **Game-Agnostic Layout Planner:** Browser-based, self-contained canvas for in-game builds. Initial pack: Satisfactory; future packs follow identical architecture.
+- **Professional UX:** Dark/earthy base theme with subtle blue/green/yellow accents and hints of purple. Floating, configurable panels with optional magnetic edge snapping; reset/layout presets for desktop, tablet, and touchscreen.
+- **Extensibility:** Modular stencil system organized per game pack; in-app stencil editor; AI-powered tutorial/assistant planned.
+- **Continuity Guarantee:** This manifest is the single source of truth for project state, structure, and roadmap. It ensures session continuity and rebuildability.
 
 ---
+
+## 2. Near-Term Functional Priorities
+1. **Save/Load to File:** Design JSON schema for canvas and metadata; implement download/upload handlers.
+2. **Canvas & Grid:** Zoomable, pannable grid accurate to game units; placeholder stencil placement.
+3. **Layers & Context Menu:** Multiple layers with toggles; right-click context menu stubs (“Delete”, “Duplicate”, etc.).
+4. **Overlays & Statistics:** Power-draw overlay; input/output flow shading; side-panel summary with toggles.
+5. **UI Panels & Workflow:** Floating panels; safe zones; reset layout; workflow presets.
+6. **Tutorial System:** On-first-visit prompt with skip/toggle; designed for future AI companion.
+
+---
+
+## 3. Roadmap & Packaging
+- **Version 1.0:** Full browser application ZIP (`Planitaria_1.0.zip`) containing complete source, `readme_Chloe.md`, and `planitaria.meta.json`.
+- **Version 1.1:** Installable wrappers for Mac, Windows, iOS, and Android.
+- **Version 1.2:** On-canvas AI assistant integration.
+- **Community & Branding:** GitHub Pages demo; stencil marketplace; merch concepts (Planitae, Planitist).
+
+---
+
+## 4. Continuity Protocol
+- **Always Include:** This file and `planitaria.meta.json` in every build.
+- **Append-Only:** Each change log entry must be appended with timestamp and file hash.
+- **Verification:** Automated scripts must check for presence and integrity on startup.
+
+---
+
+## 5. Immediate Next Steps
+- **Project Setup:** Finalize build pipeline (Vite/Webpack) to output complete ZIP.
+- **Implement Save/Load:** Wire download/upload of JSON state.
+- **Canvas & Grid Stub:** Basic rendering and stencil placement.
+- **Layer/Context Menu Stub:** Two layers; stub menu entries.
+
+---
+
+## 6. Change Log
+### [2025-05-15] UI Shell + Core Components
+- **Added:**
+  - `Toolbar.jsx`, `StencilTray.jsx`, `CanvasArea.jsx`
+- **Updated:**
+  - `App.jsx` to integrate new components
+- **Note:**
+  - SSH setup for GitHub confirmed; proper commit discipline enforced.
 
 ### [2025-05-15] Canvas Interactivity + Global State Slice
+- **Added:**
+  - `src/utils/store.js` — zustand global state store for canvas stencils.
+- **Updated:**
+  - `CanvasArea.jsx` — interactive dragging.
+  - `StencilTray.jsx` — clicking adds stencil to canvas.
+  - `App.jsx` — integrates interactive features.
+- **Dependencies:**
+  - `zustand`
+- **Next Step:** Integrate deletion, selection, and save/load.
 
-- **Added:**  
-  - `src/utils/store.js` — zustand global state store for all canvas stencils.
-- **Updated:**  
-  - `src/components/CanvasArea.jsx` — now supports interactive dragging, displays stencils.
-  - `src/components/StencilTray.jsx` — clicking a stencil now adds it to the canvas via store.
-  - `src/App.jsx` — simplified; connects new interactive features.
-- **Dependencies:**  
-  - `zustand` installed via `npm install zustand`
-- **Instructions:**  
-  - To add a stencil, click it in the tray.  
-  - To move, drag the box on the canvas.
-
-**Next Step:**  
-Integrate stencil deletion, selection, and saving/loading of layouts.  
-If you pick up work from here, read this file fully before changing architecture!
-
----
-
-### [2025-05-15] UI Shell + Core Components
-
-- **Added:**  
-  - `Toolbar.jsx`, `StencilTray.jsx`, `CanvasArea.jsx`
-- **Updated:**  
-  - `App.jsx` to integrate new components
-- **Note:**  
-  - SSH setup for GitHub confirmed, proper commit discipline enforced.
+### [2025-05-15] Deleting and Selecting Stencils Slice
+- **Added:**
+  - Selection logic: highlight selected stencil.
+  - Deletion logic: toolbar button removes selected stencil.
+- **Updated:**
+  - `store.js`, `CanvasArea.jsx`, `Toolbar.jsx`
+- **Next Step:** Integrate saving/loading layouts and overlays/statistics.
 
 ---
 
-## 🧭 **Current Project Priorities**
-
-1. Maintain `readme_Chloe.md` as living continuity.
-2. Each push/commit MUST update this file.
-3. All future AI/human contributors: *read, update, and honor these protocols and logs.*
-
----
+## 7. Current Project Priorities
+1. Maintain `readme_Chloe.md` as the living continuity manifest.
+2. Each push/commit **MUST** update this file.
+3. All contributors must read, update, and honor these protocols and logs.
 
