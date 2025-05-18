@@ -1,14 +1,13 @@
-# readme_Chloe
+# readme_Chloe.md
 
-## Planitaria Build 1.0 - 18 MAY 2025 @ 11:43 (EnginePatch)
+## Version: Planitaria_1.0_19MAY2025_Core
+Core build includes:
+- Snap-to-Grid
+- Rotation
+- Save/Load with full Planit encoding
+- Inspector Panel for item metadata (type, x, y, rotation)
+- All components rendered to /dist and /src
+- AI continuity enabled
 
-Includes:
-- Canvas system with zoom/pan
-- Drag-and-drop tray with stencils
-- Chloe tracking files (hashmap, deltas, rebuild)
-- Starter structure for Planit/Planitae expansion
-
-→ See `chloe.rebuild.md` to reconstruct Planitaria from source.
-→ Verify file integrity with `chloe.hashmap.json`.
-→ View change history in `chloe.delta.json`.
-→ App version and state defined in `planitaria.meta.json`.
+### Build Integrity
+All systems validated and stitched. Fully restorable via Chloe log system.

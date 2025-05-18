@@ -1,14 +1,13 @@
 {
-  "version": "1.0",
-  "build": "18MAY2025-Engine",
+  "build": "Planitaria_1.0_19MAY2025_Core",
   "features": [
-    "Canvas",
-    "Stencil Loader",
-    "Drag Drop",
-    "Tray Panel"
+    "snap-to-grid",
+    "rotation",
+    "save/load",
+    "inspector"
   ],
   "planitae": [
-    "Satisfactory"
+    "Satisfactory (default)"
   ],
-  "planits": []
+  "generated": true
 }

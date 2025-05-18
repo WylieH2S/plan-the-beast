@@ -1,16 +1,9 @@
 {
-  "updates": [
-    {
-      "version": "1.0",
-      "timestamp": "2025-05-18T11:43:00Z",
-      "files_added": [
-        "public/index.html",
-        "src/main.tsx",
-        "src/App.tsx",
-        "src/Canvas.tsx",
-        "src/Tray.tsx"
-      ],
-      "notes": "Initial engine build with canvas, tray, drag-drop system"
-    }
+  "version": "Planitaria_1.0_19MAY2025_Core",
+  "changes": [
+    "Merged Save/Load + Inspector Panel",
+    "Exported Planits retain rotation, position, and type",
+    "Inspector selection restored after load",
+    "Updated core files and metadata for AI reconstruction"
   ]
 }
