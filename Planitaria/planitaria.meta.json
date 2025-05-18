@@ -1,13 +1,24 @@
 {
-  "build": "Planitaria_1.0_19MAY2025_Core",
+  "project": "Planitaria",
+  "version": "pre-1.0",
+  "buildstamp": "Planitaria_SimulationScaffold_FULL",
   "features": [
-    "snap-to-grid",
+    "snap_to_grid",
     "rotation",
-    "save/load",
-    "inspector"
+    "tray_dragdrop",
+    "inspector_editable",
+    "planit_encryption",
+    "planitae_switching",
+    "visual_overlays",
+    "connection_system",
+    "simulation_scaffolding"
   ],
   "planitae": [
-    "Satisfactory (default)"
+    "Satisfactory"
   ],
-  "generated": true
+  "status": {
+    "ui": "functionally complete, unstyled",
+    "logic": "connection + simulation scaffold active",
+    "ready_for_github_qc": true
+  }
 }
