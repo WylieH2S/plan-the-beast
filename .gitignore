@@ -1,4 +1,12 @@
+# macOS system files
+.DS_Store
+__MACOSX/
+
+# Node and build files
 node_modules/
 dist/
-.DS_Store
-Planitaria*.zip
+
+# Planitaria metadata (if local-only or temporary)
+*.buildstamp
+*.rebuild.md
+*.hashmap.json
