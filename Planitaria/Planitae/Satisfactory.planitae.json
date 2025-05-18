@@ -1,0 +1,6 @@
+{
+  "name": "Satisfactory",
+  "gridSize": 8,
+  "stencils": ["Constructor", "Smelter", "Splitter", "Merger"],
+  "sampleBuilds": ["BasicCoalPower"]
+}

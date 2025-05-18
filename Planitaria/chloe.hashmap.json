@@ -1,0 +1,12 @@
+{
+  "public/index.html": "ee92c24ad4e9cd2597a3286b50c1a352f162f7996a5cf65beb02f4b0448d025f",
+  "src/main.tsx": "2d7db08a9b8e6496d83c75a8914c5e89cd670e35ae88bd79065b21c5d770d86c",
+  "src/App.tsx": "bca9a09a8a55b593c4064467da59f2a26063cdd64c5637c67c9e50a8af94a9cd",
+  "package.json": "2245019304079f8b443a6095f99fe6c8f006621ada738883c26bfceed2c86ccd",
+  "tsconfig.json": "c8866c6ac37c254415dbefb70b0d76d603816419b0c2c93fcf680699d005c3e2",
+  "vite.config.ts": "74b09cebcffb3a70d459d02d886dbbe7d2aef0332fb1b1bd729c83d586b90e9a",
+  "Planitae/Satisfactory.planitae.json": "fedf6984d3c0493be46f9aa271adf29eda29265fd90f7581a3cc5679777d1f3f",
+  "Planits/BasicCoalPower.planit.json": "b02a705a0a64773ac5da435119803a7c603f04c705308974d0eb518d7d22e481",
+  "planitaria.meta.json": "f7a6923c1dc01901954c25b94faf026f6b4466d034a6231421f424da4c145405",
+  "planitaria.buildstamp": "4aa6fa5eeb58d26168d6c1b8efe9b45c113c235beb7a2fb4d3faf0a73008a912"
+}

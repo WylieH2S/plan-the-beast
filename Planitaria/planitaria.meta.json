@@ -1,6 +1,6 @@
 {
-  "name": "Planitaria",
-  "version": "1.0-premerge",
-  "date": "2025-05-15",
-  "integrity": "Pending final build"
+  "version": "1.0",
+  "build": "18MAY2025-1026",
+  "planitae": ["Satisfactory"],
+  "planits": ["BasicCoalPower"]
 }

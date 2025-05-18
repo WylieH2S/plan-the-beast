@@ -1,0 +1,14 @@
+{
+  "updates": [
+    {
+      "version": "1.0",
+      "timestamp": "2025-05-18T10:26:00Z",
+      "files_added": [
+        "src/main.tsx",
+        "Planitae/Satisfactory.planitae.json",
+        "Planits/BasicCoalPower.planit.json"
+      ],
+      "notes": "Initial modular Chloe recovery system added."
+    }
+  ]
+}
