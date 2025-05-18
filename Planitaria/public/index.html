@@ -3,91 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planitaria Save/Load Demo</title>
-  <style>
-    body { margin: 0; background: #1e1e1e; color: white; font-family: sans-serif; }
-    #tray { width: 200px; background: #333; padding: 10px; float: left; height: 100vh; box-sizing: border-box; }
-    #tray div { background: #555; padding: 6px; margin-bottom: 8px; cursor: grab; border-radius: 4px; text-align: center; }
-    #canvas { margin-left: 200px; height: 90vh; position: relative; border-left: 2px dashed #666; }
-    #controls { margin-left: 200px; height: 10vh; padding: 10px; background: #222; }
-    .stencil { position: absolute; background: lightblue; padding: 6px; border-radius: 4px; color: black; font-weight: bold; }
-  </style>
+  <title>Planitaria Snap & Rotate</title>
 </head>
 <body>
-  <div id="tray">
-    <div draggable="true" ondragstart="drag(event, 'Constructor')">Constructor</div>
-    <div draggable="true" ondragstart="drag(event, 'Smelter')">Smelter</div>
-    <div draggable="true" ondragstart="drag(event, 'Splitter')">Splitter</div>
-    <div draggable="true" ondragstart="drag(event, 'Merger')">Merger</div>
-  </div>
-  <div id="canvas" ondragover="event.preventDefault()" ondrop="drop(event)"></div>
-  <div id="controls">
-    <button onclick="savePlanit()">💾 Save Planit</button>
-    <input type="file" onchange="loadPlanit(event)" />
-  </div>
-
-  <script>
-    const items = [];
-
-    function drag(event, type) {
-      event.dataTransfer.setData("text/plain", type);
-    }
-
-    function drop(event) {
-      const type = event.dataTransfer.getData("text/plain");
-      const x = event.clientX;
-      const y = event.clientY;
-      const node = document.createElement("div");
-      node.className = "stencil";
-      node.textContent = type;
-      node.style.left = x + "px";
-      node.style.top = y + "px";
-      document.getElementById("canvas").appendChild(node);
-      items.push({ id: Date.now(), type, x, y });
-    }
-
-    function encodePlanit(data) {
-      const json = JSON.stringify(data);
-      return btoa(json);
-    }
-
-    function decodePlanit(encoded) {
-      const json = atob(encoded);
-      return JSON.parse(json);
-    }
-
-    function savePlanit() {
-      const payload = {
-        planitae: "Satisfactory",
-        created: new Date().toISOString(),
-        items
-      };
-      const encoded = encodePlanit(payload);
-      const blob = new Blob([encoded], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "MyPlanit.planit.json";
-      a.click();
-    }
-
-    function loadPlanit(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const content = e.target.result;
-        const payload = decodePlanit(content);
-        document.getElementById("canvas").innerHTML = "";
-        payload.items.forEach(item => {
-          const node = document.createElement("div");
-          node.className = "stencil";
-          node.textContent = item.type;
-          node.style.left = item.x + "px";
-          node.style.top = item.y + "px";
-          document.getElementById("canvas").appendChild(node);
-        });
-      };
-      reader.readAsText(file);
-    }
-  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
