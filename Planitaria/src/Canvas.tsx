@@ -4,9 +4,6 @@ import React, { useEffect, useState } from "react";
 const gridSize = 40;
 
 export function Canvas({ items, setItems, setSelectedItem }) {
-  const [connections, setConnections] = useState([]);
-  const [linkStart, setLinkStart] = useState(null);
-
   useEffect(() => {
     const saved = localStorage.getItem("planit");
     if (saved) {
@@ -14,7 +11,6 @@ export function Canvas({ items, setItems, setSelectedItem }) {
         const decoded = atob(saved);
         const payload = JSON.parse(decoded);
         setItems(payload.items || []);
-        setConnections(payload.connections || []);
       } catch {}
     }
   }, []);
@@ -37,8 +33,8 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       x,
       y,
       rotation: 0,
-      direction: "right",
-      role: type === "Splitter" || type === "Constructor" ? "output" : "input"
+      role: inferRole(type),
+      direction: inferDirection(0)
     };
     setItems([...items, newItem]);
   }
@@ -50,36 +46,25 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           ? {
               ...item,
               rotation: (item.rotation + 90) % 360,
-              direction: getDirection((item.rotation + 90) % 360)
+              direction: inferDirection((item.rotation + 90) % 360)
             }
           : item
       )
     );
   }
 
-  function getDirection(rotation) {
-    switch (rotation) {
-      case 0: return "up";
-      case 90: return "right";
-      case 180: return "down";
-      case 270: return "left";
-      default: return "unknown";
-    }
-  }
-
   function savePlanit() {
     const payload = {
       planitae: "Satisfactory",
       created: new Date().toISOString(),
-      items,
-      connections
+      items: items
     };
     const encoded = btoa(JSON.stringify(payload));
     localStorage.setItem("planit", encoded);
     const blob = new Blob([encoded], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "PlanitWithLinks.planit.json";
+    a.download = "SimHookPlanit.planit.json";
     a.click();
   }
 
@@ -90,46 +75,28 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       const decoded = atob(event.target.result);
       const data = JSON.parse(decoded);
       setItems(data.items || []);
-      setConnections(data.connections || []);
     };
     reader.readAsText(file);
   }
 
-  function handleClick(item) {
-    if (linkStart === null) {
-      setLinkStart(item.id);
-    } else {
-      const exists = connections.some(c => c.from === linkStart && c.to === item.id);
-      if (!exists && linkStart !== item.id) {
-        setConnections([...connections, { from: linkStart, to: item.id }]);
-      }
-      setLinkStart(null);
-    }
-    setSelectedItem(item);
+  function inferRole(type) {
+    if (type === "Splitter" || type === "Constructor") return "output";
+    if (type === "Merger" || type === "Smelter") return "input";
+    return "neutral";
   }
 
-  function getCenter(item) {
-    return {
-      x: item.x + 40 / 2,
-      y: item.y + 20
-    };
+  function inferDirection(rotation) {
+    switch (rotation) {
+      case 0: return "up";
+      case 90: return "right";
+      case 180: return "down";
+      case 270: return "left";
+      default: return "unknown";
+    }
   }
 
   return (
     <>
-      <svg width="100%" height="85vh" style={{ position: "absolute", pointerEvents: "none" }}>
-        {connections.map((conn, index) => {
-          const from = items.find(i => i.id === conn.from);
-          const to = items.find(i => i.id === conn.to);
-          if (!from || !to) return null;
-          const p1 = getCenter(from);
-          const p2 = getCenter(to);
-          return (
-            <line key={index} x1={p1.x + 200} y1={p1.y} x2={p2.x + 200} y2={p2.y}
-              stroke="cyan" strokeWidth="2" />
-          );
-        })}
-      </svg>
       <div
         style={{
           flex: 1,
@@ -145,7 +112,7 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       >
         {items.map((item) => (
           <div key={item.id}
-            onClick={() => handleClick(item)}
+            onClick={() => setSelectedItem(item)}
             onContextMenu={(e) => {
               e.preventDefault();
               rotateItem(item.id);
@@ -160,7 +127,8 @@ export function Canvas({ items, setItems, setSelectedItem }) {
               fontWeight: "bold",
               color: "#000",
               transform: `rotate(${item.rotation}deg)`,
-              cursor: "pointer"
+              cursor: "pointer",
+              borderLeft: item.role === "input" ? "4px solid green" : item.role === "output" ? "4px solid red" : "none"
             }}>
             {item.type}
           </div>
