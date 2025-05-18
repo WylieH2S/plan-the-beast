@@ -3,7 +3,7 @@ import React from "react";
 const stencils = ["Constructor", "Smelter", "Splitter", "Merger"];
 
 export function Tray() {
-  function onDragStart(event: React.DragEvent, type: string) {
+  function onDragStart(event, type) {
     event.dataTransfer.setData("text/plain", type);
   }
 
@@ -13,8 +13,9 @@ export function Tray() {
       background: "#333",
       color: "#fff",
       padding: 10,
-      display: "flex",
-      flexDirection: "column"
+      float: "left",
+      height: "100vh",
+      boxSizing: "border-box"
     }}>
       {stencils.map((type) => (
         <div
