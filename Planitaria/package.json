@@ -1,5 +1,5 @@
 {
-  "name": "planitaria-snaprotate",
+  "name": "planitaria-inspector",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
