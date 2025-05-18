@@ -4,9 +4,6 @@ import React, { useEffect, useState } from "react";
 const gridSize = 40;
 
 export function Canvas({ items, setItems, setSelectedItem }) {
-  const [showGrid, setShowGrid] = useState(true);
-  const [showOverlays, setShowOverlays] = useState(true);
-
   useEffect(() => {
     const saved = localStorage.getItem("planit");
     if (saved) {
@@ -30,7 +27,15 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     const rawX = event.clientX - 200;
     const rawY = event.clientY;
     const { x, y } = snapToGrid(rawX, rawY);
-    const newItem = { id: Date.now(), type, x, y, rotation: 0 };
+    const newItem = {
+      id: Date.now(),
+      type,
+      x,
+      y,
+      rotation: 0,
+      role: inferRole(type),
+      direction: inferDirection(0)
+    };
     setItems([...items, newItem]);
   }
 
@@ -38,7 +43,11 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     setItems(prev =>
       prev.map(item =>
         item.id === id
-          ? { ...item, rotation: (item.rotation + 90) % 360 }
+          ? {
+              ...item,
+              rotation: (item.rotation + 90) % 360,
+              direction: inferDirection((item.rotation + 90) % 360)
+            }
           : item
       )
     );
@@ -55,7 +64,7 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     const blob = new Blob([encoded], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "MyPlanit.planit.json";
+    a.download = "SimHookPlanit.planit.json";
     a.click();
   }
 
@@ -70,6 +79,22 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     reader.readAsText(file);
   }
 
+  function inferRole(type) {
+    if (type === "Splitter" || type === "Constructor") return "output";
+    if (type === "Merger" || type === "Smelter") return "input";
+    return "neutral";
+  }
+
+  function inferDirection(rotation) {
+    switch (rotation) {
+      case 0: return "up";
+      case 90: return "right";
+      case 180: return "down";
+      case 270: return "left";
+      default: return "unknown";
+    }
+  }
+
   return (
     <>
       <div
@@ -79,8 +104,8 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           marginRight: 200,
           height: "85vh",
           position: "relative",
-          backgroundSize: showGrid ? `${gridSize}px ${gridSize}px` : "none",
-          backgroundImage: showGrid ? "linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)" : "none"
+          backgroundSize: `${gridSize}px ${gridSize}px`,
+          backgroundImage: "linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)"
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
@@ -103,8 +128,7 @@ export function Canvas({ items, setItems, setSelectedItem }) {
               color: "#000",
               transform: `rotate(${item.rotation}deg)`,
               cursor: "pointer",
-              borderLeft: showOverlays ? "4px solid green" : "none",
-              borderRight: showOverlays ? "4px solid red" : "none"
+              borderLeft: item.role === "input" ? "4px solid green" : item.role === "output" ? "4px solid red" : "none"
             }}>
             {item.type}
           </div>
@@ -120,14 +144,6 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       }}>
         <button onClick={savePlanit}>💾 Save</button>
         <input type="file" onChange={loadPlanit} />
-        <label style={{ marginLeft: 10 }}>
-          <input type="checkbox" checked={showGrid} onChange={() => setShowGrid(!showGrid)} />
-          Show Grid
-        </label>
-        <label style={{ marginLeft: 10 }}>
-          <input type="checkbox" checked={showOverlays} onChange={() => setShowOverlays(!showOverlays)} />
-          Show Overlays
-        </label>
       </div>
     </>
   );
