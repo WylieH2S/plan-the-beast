@@ -19,7 +19,7 @@ export function Inspector({ item }) {
           <div><strong>Type:</strong> {item.type}</div>
           <div><strong>X:</strong> {item.x}</div>
           <div><strong>Y:</strong> {item.y}</div>
-          <div><strong>Rotation:</strong> {item.rotation}°</div>
+          <div><strong>Rotation:</strong> {item.rotation}&deg;</div>
         </>
       ) : (
         <div>No item selected</div>

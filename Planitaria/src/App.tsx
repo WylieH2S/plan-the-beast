@@ -4,8 +4,8 @@ import { Tray } from "./Tray";
 import { Inspector } from "./Inspector";
 
 export default function App() {
-  const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   return (
     <>
