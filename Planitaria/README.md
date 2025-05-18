@@ -1,17 +1,16 @@
-# Planitaria
+# Planitaria (Editable Inspector Build)
 
-Planitaria is a visual logic and layout tool for simulation games and design systems. This version includes:
-- Snap-to-grid building
-- Stencil placement and rotation
-- Save/load functionality
-- Password-protected encrypted Planit files
-- Inspector panel for item details
+## What's New
+- Inspector panel now allows:
+  - Editing item type
+  - Adjusting X/Y position and rotation
+  - Adding and updating notes for each stencil
+- All changes are saved and reloaded with Planits
+- Real-time updates across canvas and Inspector
 
 ## Usage
-- Drag stencils from the tray to the canvas
-- Right-click to rotate
-- Click to inspect details
-- Save to encrypted Planit file with password
-- Load via encrypted Planit file (requires correct password)
+- Click an item to inspect and edit
+- Save your Planit with changes preserved
+- Reload to see editable fields restored
 
-This project is part of a larger extensible framework and in active development.
+This build focuses on completing the metadata layer and preparing for logic-based systems.

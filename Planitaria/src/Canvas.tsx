@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 
 const gridSize = 40;
 
 export function Canvas({ items, setItems, setSelectedItem }) {
+  const [showGrid, setShowGrid] = useState(true);
+  const [showOverlays, setShowOverlays] = useState(true);
+
   useEffect(() => {
     const saved = localStorage.getItem("planit");
     if (saved) {
@@ -75,7 +79,8 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           marginRight: 200,
           height: "85vh",
           position: "relative",
-          borderLeft: "2px dashed #666"
+          backgroundSize: showGrid ? `${gridSize}px ${gridSize}px` : "none",
+          backgroundImage: showGrid ? "linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)" : "none"
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
@@ -97,7 +102,9 @@ export function Canvas({ items, setItems, setSelectedItem }) {
               fontWeight: "bold",
               color: "#000",
               transform: `rotate(${item.rotation}deg)`,
-              cursor: "pointer"
+              cursor: "pointer",
+              borderLeft: showOverlays ? "4px solid green" : "none",
+              borderRight: showOverlays ? "4px solid red" : "none"
             }}>
             {item.type}
           </div>
@@ -108,10 +115,19 @@ export function Canvas({ items, setItems, setSelectedItem }) {
         marginRight: 200,
         padding: 10,
         background: "#222",
-        height: "5vh"
+        height: "5vh",
+        color: "#fff"
       }}>
         <button onClick={savePlanit}>💾 Save</button>
         <input type="file" onChange={loadPlanit} />
+        <label style={{ marginLeft: 10 }}>
+          <input type="checkbox" checked={showGrid} onChange={() => setShowGrid(!showGrid)} />
+          Show Grid
+        </label>
+        <label style={{ marginLeft: 10 }}>
+          <input type="checkbox" checked={showOverlays} onChange={() => setShowOverlays(!showOverlays)} />
+          Show Overlays
+        </label>
       </div>
     </>
   );

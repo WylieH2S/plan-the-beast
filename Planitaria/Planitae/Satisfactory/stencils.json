@@ -1,0 +1,17 @@
+{
+  "planitae": "Satisfactory",
+  "stencils": [
+    {
+      "type": "Constructor"
+    },
+    {
+      "type": "Smelter"
+    },
+    {
+      "type": "Splitter"
+    },
+    {
+      "type": "Merger"
+    }
+  ]
+}
