@@ -3,7 +3,43 @@ import React, { useEffect, useState } from "react";
 
 const gridSize = 40;
 
+function simulate(items, connections) {
+  const state = {};
+  const incoming = {};
+
+  items.forEach(item => {
+    state[item.id] = { satisfied: item.role !== "input" }; // inputs need satisfaction
+    incoming[item.id] = [];
+  });
+
+  connections.forEach(link => {
+    if (state[link.to]) {
+      incoming[link.to].push(link.from);
+    }
+  });
+
+  let updated = true;
+  while (updated) {
+    updated = false;
+    for (let item of items) {
+      if (item.role === "input") {
+        const sources = incoming[item.id] || [];
+        const satisfied = sources.some(id => state[id]?.satisfied);
+        if (satisfied && !state[item.id].satisfied) {
+          state[item.id].satisfied = true;
+          updated = true;
+        }
+      }
+    }
+  }
+
+  return state;
+}
+
 export function Canvas({ items, setItems, setSelectedItem }) {
+  const [connections, setConnections] = useState([]);
+  const [simState, setSimState] = useState({});
+
   useEffect(() => {
     const saved = localStorage.getItem("planit");
     if (saved) {
@@ -11,30 +47,33 @@ export function Canvas({ items, setItems, setSelectedItem }) {
         const decoded = atob(saved);
         const payload = JSON.parse(decoded);
         setItems(payload.items || []);
+        setConnections(payload.connections || []);
+        if (payload.simState) setSimState(payload.simState);
       } catch {}
     }
   }, []);
 
-  function snapToGrid(x, y) {
-    return {
-      x: Math.round(x / gridSize) * gridSize,
-      y: Math.round(y / gridSize) * gridSize
-    };
-  }
+  useEffect(() => {
+    const result = simulate(items, connections);
+    setSimState(result);
+  }, [items, connections]);
 
   function onDrop(event) {
     const type = event.dataTransfer.getData("text/plain");
     const rawX = event.clientX - 200;
     const rawY = event.clientY;
-    const { x, y } = snapToGrid(rawX, rawY);
+    const { x, y } = {
+      x: Math.round(rawX / gridSize) * gridSize,
+      y: Math.round(rawY / gridSize) * gridSize
+    };
     const newItem = {
       id: Date.now(),
       type,
       x,
       y,
       rotation: 0,
-      role: inferRole(type),
-      direction: inferDirection(0)
+      direction: "right",
+      role: type === "Splitter" || type === "Constructor" ? "output" : "input"
     };
     setItems([...items, newItem]);
   }
@@ -46,25 +85,37 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           ? {
               ...item,
               rotation: (item.rotation + 90) % 360,
-              direction: inferDirection((item.rotation + 90) % 360)
+              direction: getDirection((item.rotation + 90) % 360)
             }
           : item
       )
     );
   }
 
+  function getDirection(rotation) {
+    switch (rotation) {
+      case 0: return "up";
+      case 90: return "right";
+      case 180: return "down";
+      case 270: return "left";
+      default: return "unknown";
+    }
+  }
+
   function savePlanit() {
     const payload = {
       planitae: "Satisfactory",
       created: new Date().toISOString(),
-      items: items
+      items,
+      connections,
+      simState
     };
     const encoded = btoa(JSON.stringify(payload));
     localStorage.setItem("planit", encoded);
     const blob = new Blob([encoded], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "SimHookPlanit.planit.json";
+    a.download = "SimulatedPlanit.planit.json";
     a.click();
   }
 
@@ -75,28 +126,38 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       const decoded = atob(event.target.result);
       const data = JSON.parse(decoded);
       setItems(data.items || []);
+      setConnections(data.connections || []);
+      if (data.simState) setSimState(data.simState);
     };
     reader.readAsText(file);
   }
 
-  function inferRole(type) {
-    if (type === "Splitter" || type === "Constructor") return "output";
-    if (type === "Merger" || type === "Smelter") return "input";
-    return "neutral";
+  function handleClick(item) {
+    setSelectedItem(item);
   }
 
-  function inferDirection(rotation) {
-    switch (rotation) {
-      case 0: return "up";
-      case 90: return "right";
-      case 180: return "down";
-      case 270: return "left";
-      default: return "unknown";
-    }
+  function getCenter(item) {
+    return {
+      x: item.x + 40 / 2,
+      y: item.y + 20
+    };
   }
 
   return (
     <>
+      <svg width="100%" height="85vh" style={{ position: "absolute", pointerEvents: "none" }}>
+        {connections.map((conn, index) => {
+          const from = items.find(i => i.id === conn.from);
+          const to = items.find(i => i.id === conn.to);
+          if (!from || !to) return null;
+          const p1 = getCenter(from);
+          const p2 = getCenter(to);
+          return (
+            <line key={index} x1={p1.x + 200} y1={p1.y} x2={p2.x + 200} y2={p2.y}
+              stroke="cyan" strokeWidth="2" />
+          );
+        })}
+      </svg>
       <div
         style={{
           flex: 1,
@@ -110,29 +171,31 @@ export function Canvas({ items, setItems, setSelectedItem }) {
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
       >
-        {items.map((item) => (
-          <div key={item.id}
-            onClick={() => setSelectedItem(item)}
-            onContextMenu={(e) => {
-              e.preventDefault();
-              rotateItem(item.id);
-            }}
-            style={{
-              position: "absolute",
-              left: item.x,
-              top: item.y,
-              background: "lightblue",
-              padding: "6px 10px",
-              borderRadius: 4,
-              fontWeight: "bold",
-              color: "#000",
-              transform: `rotate(${item.rotation}deg)`,
-              cursor: "pointer",
-              borderLeft: item.role === "input" ? "4px solid green" : item.role === "output" ? "4px solid red" : "none"
-            }}>
-            {item.type}
-          </div>
-        ))}
+        {items.map((item) => {
+          const satisfied = simState[item.id]?.satisfied;
+          return (
+            <div key={item.id}
+              onClick={() => handleClick(item)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                rotateItem(item.id);
+              }}
+              style={{
+                position: "absolute",
+                left: item.x,
+                top: item.y,
+                background: satisfied === true ? "#9f9" : satisfied === false ? "#f99" : "lightblue",
+                padding: "6px 10px",
+                borderRadius: 4,
+                fontWeight: "bold",
+                color: "#000",
+                transform: `rotate(${item.rotation}deg)`,
+                cursor: "pointer"
+              }}>
+              {item.type}
+            </div>
+          );
+        })}
       </div>
       <div style={{
         marginLeft: 200,
