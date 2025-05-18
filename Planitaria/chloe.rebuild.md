@@ -1,17 +1,8 @@
-# Rebuild Instructions
+# Planitaria 1.0 Engine Rebuild Instructions
 
-## Planitaria Version 1.0 (18 MAY 2025 @ 1026)
+To rebuild:
+1. Install Node.js v18+ and Vite.
+2. Run `npm install` and `npm run dev`.
+3. All source files listed in chloe.hashmap.json.
 
-### Required:
-- Node.js v18+
-- Vite v4
-- React 18
-- TypeScript
-
-### Steps:
-1. Recreate folders and files from delta + hashes
-2. Run:
-```bash
-npm install
-npm run dev
-```
+Canvas, drag-drop tray, and panel system are included in this build.

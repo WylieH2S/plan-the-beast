@@ -1,15 +1,14 @@
 # readme_Chloe
 
-## Planitaria Build 1.0 - 18 MAY 2025 @ 1026
+## Planitaria Build 1.0 - 18 MAY 2025 @ 11:43 (EnginePatch)
 
-This file provides a high-level summary of changes, state, and project goals.
+Includes:
+- Canvas system with zoom/pan
+- Drag-and-drop tray with stencils
+- Chloe tracking files (hashmap, deltas, rebuild)
+- Starter structure for Planit/Planitae expansion
 
-### Key Files:
-- chloe.delta.json
-- chloe.rebuild.md
-- chloe.hashmap.json
-- planitaria.meta.json
-- planitaria.buildstamp
-
-→ See `chloe.rebuild.md` to fully reconstruct Planitaria from scratch.
-→ See `chloe.delta.json` for all version diffs.
+→ See `chloe.rebuild.md` to reconstruct Planitaria from source.
+→ Verify file integrity with `chloe.hashmap.json`.
+→ View change history in `chloe.delta.json`.
+→ App version and state defined in `planitaria.meta.json`.

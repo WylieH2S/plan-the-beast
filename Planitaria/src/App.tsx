@@ -1,11 +1,17 @@
 import React from "react";
+import { Canvas } from "./Canvas";
+import { Tray } from "./Tray";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <h1>Welcome to Planitaria 1.0</h1>
+    <div style={{
+      display: "flex",
+      height: "100vh",
+      backgroundColor: "#1e1e1e",
+      color: "white"
+    }}>
+      <Tray />
+      <Canvas />
     </div>
   );
 }
-
-export default App;

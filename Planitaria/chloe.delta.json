@@ -2,13 +2,15 @@
   "updates": [
     {
       "version": "1.0",
-      "timestamp": "2025-05-18T10:26:00Z",
+      "timestamp": "2025-05-18T11:43:00Z",
       "files_added": [
+        "public/index.html",
         "src/main.tsx",
-        "Planitae/Satisfactory.planitae.json",
-        "Planits/BasicCoalPower.planit.json"
+        "src/App.tsx",
+        "src/Canvas.tsx",
+        "src/Tray.tsx"
       ],
-      "notes": "Initial modular Chloe recovery system added."
+      "notes": "Initial engine build with canvas, tray, drag-drop system"
     }
   ]
 }

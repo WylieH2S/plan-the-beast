@@ -1,6 +1,14 @@
 {
   "version": "1.0",
-  "build": "18MAY2025-1026",
-  "planitae": ["Satisfactory"],
-  "planits": ["BasicCoalPower"]
+  "build": "18MAY2025-Engine",
+  "features": [
+    "Canvas",
+    "Stencil Loader",
+    "Drag Drop",
+    "Tray Panel"
+  ],
+  "planitae": [
+    "Satisfactory"
+  ],
+  "planits": []
 }
