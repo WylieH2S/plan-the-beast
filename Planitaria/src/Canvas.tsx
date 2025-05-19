@@ -8,7 +8,7 @@ function simulate(items, connections) {
   const incoming = {};
 
   items.forEach(item => {
-    state[item.id] = { satisfied: item.role !== "input" }; // inputs need satisfaction
+    state[item.id] = { satisfied: item.role !== "input" };
     incoming[item.id] = [];
   });
 
@@ -39,6 +39,8 @@ function simulate(items, connections) {
 export function Canvas({ items, setItems, setSelectedItem }) {
   const [connections, setConnections] = useState([]);
   const [simState, setSimState] = useState({});
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [showOverlays, setShowOverlays] = useState(true);
 
   useEffect(() => {
     const saved = localStorage.getItem("planit");
@@ -58,80 +60,6 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     setSimState(result);
   }, [items, connections]);
 
-  function onDrop(event) {
-    const type = event.dataTransfer.getData("text/plain");
-    const rawX = event.clientX - 200;
-    const rawY = event.clientY;
-    const { x, y } = {
-      x: Math.round(rawX / gridSize) * gridSize,
-      y: Math.round(rawY / gridSize) * gridSize
-    };
-    const newItem = {
-      id: Date.now(),
-      type,
-      x,
-      y,
-      rotation: 0,
-      direction: "right",
-      role: type === "Splitter" || type === "Constructor" ? "output" : "input"
-    };
-    setItems([...items, newItem]);
-  }
-
-  function rotateItem(id) {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === id
-          ? {
-              ...item,
-              rotation: (item.rotation + 90) % 360,
-              direction: getDirection((item.rotation + 90) % 360)
-            }
-          : item
-      )
-    );
-  }
-
-  function getDirection(rotation) {
-    switch (rotation) {
-      case 0: return "up";
-      case 90: return "right";
-      case 180: return "down";
-      case 270: return "left";
-      default: return "unknown";
-    }
-  }
-
-  function savePlanit() {
-    const payload = {
-      planitae: "Satisfactory",
-      created: new Date().toISOString(),
-      items,
-      connections,
-      simState
-    };
-    const encoded = btoa(JSON.stringify(payload));
-    localStorage.setItem("planit", encoded);
-    const blob = new Blob([encoded], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "SimulatedPlanit.planit.json";
-    a.click();
-  }
-
-  function loadPlanit(e) {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const decoded = atob(event.target.result);
-      const data = JSON.parse(decoded);
-      setItems(data.items || []);
-      setConnections(data.connections || []);
-      if (data.simState) setSimState(data.simState);
-    };
-    reader.readAsText(file);
-  }
-
   function handleClick(item) {
     setSelectedItem(item);
   }
@@ -141,6 +69,15 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       x: item.x + 40 / 2,
       y: item.y + 20
     };
+  }
+
+  function getTooltip(item) {
+    const state = simState[item.id];
+    return \`\${item.type}\nRole: \${item.role}\nDirection: \${item.direction}\nSatisfied: \${state?.satisfied ? "Yes" : "No"}\`;
+  }
+
+  function hasError(item) {
+    return item.role === "input" && !(simState[item.id]?.satisfied);
   }
 
   return (
@@ -165,21 +102,18 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           marginRight: 200,
           height: "85vh",
           position: "relative",
-          backgroundSize: `${gridSize}px ${gridSize}px`,
+          backgroundSize: \`\${gridSize}px \${gridSize}px\`,
           backgroundImage: "linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)"
         }}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={onDrop}
       >
         {items.map((item) => {
           const satisfied = simState[item.id]?.satisfied;
           return (
             <div key={item.id}
+              title={showOverlays ? getTooltip(item) : ""}
               onClick={() => handleClick(item)}
-              onContextMenu={(e) => {
-                e.preventDefault();
-                rotateItem(item.id);
-              }}
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
               style={{
                 position: "absolute",
                 left: item.x,
@@ -189,10 +123,18 @@ export function Canvas({ items, setItems, setSelectedItem }) {
                 borderRadius: 4,
                 fontWeight: "bold",
                 color: "#000",
-                transform: `rotate(${item.rotation}deg)`,
-                cursor: "pointer"
+                transform: \`rotate(\${item.rotation}deg)\`,
+                cursor: "pointer",
+                boxShadow: hoveredItem === item.id && showOverlays ? "0 0 6px yellow" : "none"
               }}>
               {item.type}
+              {hasError(item) && showOverlays && (
+                <span style={{
+                  marginLeft: 5,
+                  color: "red",
+                  fontWeight: "bold"
+                }}>⚠️</span>
+              )}
             </div>
           );
         })}
@@ -205,8 +147,10 @@ export function Canvas({ items, setItems, setSelectedItem }) {
         height: "5vh",
         color: "#fff"
       }}>
-        <button onClick={savePlanit}>💾 Save</button>
-        <input type="file" onChange={loadPlanit} />
+        <label style={{ marginRight: 10 }}>
+          <input type="checkbox" checked={showOverlays} onChange={() => setShowOverlays(!showOverlays)} />
+          Show Overlays
+        </label>
       </div>
     </>
   );
