@@ -10,3 +10,4 @@ dist/
 *.buildstamp
 *.rebuild.md
 *.hashmap.json
+Planitaria*.zip
