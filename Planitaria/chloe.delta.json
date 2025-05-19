@@ -1,14 +1,12 @@
 {
-  "timestamp": "2025-05-19T00:00:00Z",
+  "timestamp": "2025-05-19T22:00:00Z",
   "changes": [
-    "Implemented connection system: click-to-link, visual lines, metadata saved",
-    "Implemented simulation scaffolding: isSatisfied(), hasInput(), error state tracking",
-    "Updated Planit schema to include role, direction, connections, simState",
-    "Added grid and overlay toggles",
-    "Created Inspector editing and note system",
-    "Continuity logs updated post-simulation milestone"
+    "Added diagnostic tooltip overlays to Canvas",
+    "Implemented error flag rendering for unsatisfied logic",
+    "Added overlay toggle UI control",
+    "Verified continuity files and Planit export logic",
+    "Synced project with GitHub post-Diagnostic milestone"
   ],
-  "warnings": [],
-  "versionContext": "Pre-1.0 simulation-ready milestone",
-  "checksum": "sha256::snapshot-verified"
+  "versionContext": "Pre-1.0 diagnostic logic complete",
+  "checksum": "sha256::logic-overlays-verified"
 }

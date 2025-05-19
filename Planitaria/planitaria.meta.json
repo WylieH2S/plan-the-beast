@@ -1,7 +1,7 @@
 {
   "project": "Planitaria",
   "version": "pre-1.0",
-  "buildstamp": "Planitaria_SimulationScaffold_FULL",
+  "buildstamp": "Planitaria_OverlayDiagnostics_FULL",
   "features": [
     "snap_to_grid",
     "rotation",
@@ -11,14 +11,19 @@
     "planitae_switching",
     "visual_overlays",
     "connection_system",
-    "simulation_scaffolding"
+    "simulation_scaffolding",
+    "logic_flow_simulation",
+    "diagnostic_tooltips",
+    "error_flags",
+    "overlay_toggles"
   ],
   "planitae": [
     "Satisfactory"
   ],
   "status": {
-    "ui": "functionally complete, unstyled",
-    "logic": "connection + simulation scaffold active",
-    "ready_for_github_qc": true
+    "logic": "diagnostics verified",
+    "ui": "basic overlays active",
+    "save_ready": true,
+    "continuity_synced": true
   }
 }
