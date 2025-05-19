@@ -9,14 +9,25 @@ function simulate(items, connections) {
 
   items.forEach(item => {
     state[item.id] = {
-      satisfied: item.role !== "input",
+      satisfied: item.role === "output",
       reason: item.role !== "input" ? "non_input" : "missing_input",
       errors: []
     };
     incoming[item.id] = [];
   });
 
-  connections.forEach(link => {
+  
+function hasInput(id) {
+  return incoming[id] && incoming[id].length > 0;
+}
+
+function isSatisfied(id) {
+  const inputs = incoming[id] || [];
+  return inputs.some(inputId => state[inputId]?.satisfied);
+}
+
+connections.forEach(link => {
+
     if (state[link.to]) {
       incoming[link.to].push(link.from);
     }
@@ -50,7 +61,24 @@ function simulate(items, connections) {
     }
   });
 
+
 while (updated) {
+  updated = false;
+  for (const item of items) {
+    if (item.role === "input") {
+      const ok = hasInput(item.id) && isSatisfied(item.id);
+      if (ok && !state[item.id].satisfied) {
+        state[item.id].satisfied = true;
+        state[item.id].reason = "flow_valid";
+        updated = true;
+      }
+      if (!ok && hasInput(item.id)) {
+        state[item.id].reason = "unsatisfied_input";
+        state[item.id].errors.push("unsatisfied_input");
+      }
+    }
+  }
+
     updated = false;
     for (let item of items) {
       if (item.role === "input") {
@@ -185,7 +213,7 @@ useEffect(() => {
           const satisfied = simState[item.id]?.satisfied;
           return (
             <div key={item.id}
-              title={showOverlays ? getTooltip(item) : ""}
+              title={showOverlays ? getTooltip(item) + (simState[item.id]?.errors?.length ? "\nErrors: " + simState[item.id].errors.join(", ") : "") : ""}
               onClick={() => connectMode ? handleConnectClick(item) : handleClick(item)}
               onMouseEnter={() => setHoveredItem(item.id)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -200,10 +228,10 @@ useEffect(() => {
                 color: "#000",
                 transform: \`rotate(\${item.rotation}deg)\`,
                 cursor: "pointer",
-                boxShadow: hoveredItem === item.id && showOverlays ? "0 0 6px yellow" : "none"
+                boxShadow: hoveredItem === item.id && showOverlays ? "0 0 6px yellow" : "none", border: simState[item.id]?.errors?.length > 0 && showOverlays ? "2px solid red" : "none"
               }}>
               {item.type}
-              {hasError(item) && showOverlays && (
+              {showOverlays && simState[item.id]?.errors?.length > 0 && (
                 <span style={{
                   marginLeft: 5,
                   color: "red",
