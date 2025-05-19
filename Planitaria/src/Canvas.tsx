@@ -109,17 +109,6 @@ export function Canvas({ items, setItems, setSelectedItem }) {
 const [connectMode, setConnectMode] = useState(false);
 const [selectedForLink, setSelectedForLink] = useState(null);
 
-function handleConnectClick(item) {
-  if (!connectMode) return;
-  if (!selectedForLink) {
-    setSelectedForLink(item.id);
-  } else if (selectedForLink === item.id) {
-    setSelectedForLink(null);
-  } else {
-    const newConn = { from: selectedForLink, to: item.id };
-    if (!connections.some(c => c.from === newConn.from && c.to === newConn.to)) {
-      setConnections([...connections, newConn]);
-    }
     setSelectedForLink(null);
   }
 }
@@ -139,20 +128,7 @@ useEffect(() => {
   }, []);
 
   
-const [connectMode, setConnectMode] = useState(false);
-const [selectedForLink, setSelectedForLink] = useState(null);
 
-function handleConnectClick(item) {
-  if (!connectMode) return;
-  if (!selectedForLink) {
-    setSelectedForLink(item.id);
-  } else if (selectedForLink === item.id) {
-    setSelectedForLink(null);
-  } else {
-    const newConn = { from: selectedForLink, to: item.id };
-    if (!connections.some(c => c.from === newConn.from && c.to === newConn.to)) {
-      setConnections([...connections, newConn]);
-    }
     setSelectedForLink(null);
   }
 }
@@ -176,7 +152,7 @@ useEffect(() => {
 
   function getTooltip(item) {
     const state = simState[item.id];
-    return \`\${item.type}\nRole: \${item.role}\nState: \${state?.satisfied ? "✔" : "✘"}\nReason: \${state?.reason}\`;
+    return `\${item.type}\nRole: \${item.role}\nState: \${state?.satisfied ? "✔" : "✘"}\nReason: \${state?.reason}\`;
   }
 
   function hasError(item) {
