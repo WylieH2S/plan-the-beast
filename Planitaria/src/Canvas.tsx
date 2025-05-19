@@ -109,8 +109,6 @@ export function Canvas({ items, setItems, setSelectedItem }) {
 const [connectMode, setConnectMode] = useState(false);
 const [selectedForLink, setSelectedForLink] = useState(null);
 
-    setSelectedForLink(null);
-  }
 }
 
 
@@ -129,8 +127,6 @@ useEffect(() => {
 
   
 
-    setSelectedForLink(null);
-  }
 }
 
 
