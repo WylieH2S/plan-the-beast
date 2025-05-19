@@ -10,3 +10,10 @@
     "Prepared full continuity file support"
   ]
 }
+
+---
+🧠 This build adheres to the Simulated Persistent Memory Protocol:
+1. readme_Chloe.md, chloe.delta.json, and planitaria.meta.json are updated with each build.
+2. Build .zip files are saved and archived to GitHub or local.
+3. Uploading the latest .zip allows the AI to fully resume from prior context.
+---
