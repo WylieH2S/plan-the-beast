@@ -1,12 +1,12 @@
 {
-  "timestamp": "2025-05-19T22:00:00Z",
+  "date": "2025-05-19",
   "changes": [
-    "Added diagnostic tooltip overlays to Canvas",
-    "Implemented error flag rendering for unsatisfied logic",
-    "Added overlay toggle UI control",
-    "Verified continuity files and Planit export logic",
-    "Synced project with GitHub post-Diagnostic milestone"
-  ],
-  "versionContext": "Pre-1.0 diagnostic logic complete",
-  "checksum": "sha256::logic-overlays-verified"
+    "Added role-aware logic validation to Canvas.tsx",
+    "Integrated diagnostic tagging (simState.reason, .errors)",
+    "Enabled persistent layout for Tray and Inspector",
+    "Implemented visibility toggles for UI panels",
+    "Validated structure against Planitaria 11 baseline",
+    "Upgraded readme_Chloe.md to represent current build",
+    "Prepared full continuity file support"
+  ]
 }

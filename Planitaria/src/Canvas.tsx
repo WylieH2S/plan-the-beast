@@ -8,13 +8,21 @@ function simulate(items, connections) {
   const incoming = {};
 
   items.forEach(item => {
-    state[item.id] = { satisfied: item.role !== "input" };
+    state[item.id] = {
+      satisfied: item.role !== "input",
+      reason: item.role !== "input" ? "non_input" : "missing_input",
+      errors: []
+    };
     incoming[item.id] = [];
   });
 
   connections.forEach(link => {
     if (state[link.to]) {
       incoming[link.to].push(link.from);
+    }
+    if (link.from === link.to) {
+      state[link.to].errors.push("self_loop");
+      state[link.to].reason = "invalid_self_connection";
     }
   });
 
@@ -27,7 +35,11 @@ function simulate(items, connections) {
         const satisfied = sources.some(id => state[id]?.satisfied);
         if (satisfied && !state[item.id].satisfied) {
           state[item.id].satisfied = true;
+          state[item.id].reason = "valid_input";
           updated = true;
+        } else if (!satisfied) {
+          state[item.id].reason = "missing_input";
+          if (sources.length === 0) state[item.id].errors.push("unconnected_input");
         }
       }
     }
@@ -73,11 +85,11 @@ export function Canvas({ items, setItems, setSelectedItem }) {
 
   function getTooltip(item) {
     const state = simState[item.id];
-    return \`\${item.type}\nRole: \${item.role}\nDirection: \${item.direction}\nSatisfied: \${state?.satisfied ? "Yes" : "No"}\`;
+    return \`\${item.type}\nRole: \${item.role}\nState: \${state?.satisfied ? "✔" : "✘"}\nReason: \${state?.reason}\`;
   }
 
   function hasError(item) {
-    return item.role === "input" && !(simState[item.id]?.satisfied);
+    return simState[item.id]?.errors?.length > 0;
   }
 
   return (

@@ -1,29 +1,34 @@
 {
-  "project": "Planitaria",
-  "version": "pre-1.0",
-  "buildstamp": "Planitaria_OverlayDiagnostics_FULL",
-  "features": [
-    "snap_to_grid",
-    "rotation",
-    "tray_dragdrop",
-    "inspector_editable",
-    "planit_encryption",
-    "planitae_switching",
-    "visual_overlays",
-    "connection_system",
-    "simulation_scaffolding",
-    "logic_flow_simulation",
-    "diagnostic_tooltips",
-    "error_flags",
-    "overlay_toggles"
+  "planitariaVersion": "core-validated-logic-2025-05-19",
+  "features": {
+    "canvas": true,
+    "tray": true,
+    "inspector": true,
+    "connections": true,
+    "validation": true,
+    "simulation": true,
+    "diagnosticOverlays": true,
+    "persistedUI": true
+  },
+  "diagnostics": [
+    "missing_input",
+    "loop_detected",
+    "invalid_connection",
+    "self_loop"
   ],
-  "planitae": [
-    "Satisfactory"
+  "ui": [
+    "movablePanels",
+    "visibilityToggles",
+    "localStorageLayout"
   ],
-  "status": {
-    "logic": "diagnostics verified",
-    "ui": "basic overlays active",
-    "save_ready": true,
-    "continuity_synced": true
-  }
+  "dataStorage": [
+    "planitJSON",
+    "base64Save",
+    "localDownload"
+  ],
+  "continuityFiles": [
+    "readme_Chloe.md",
+    "chloe.delta.json",
+    "planitaria.meta.json"
+  ]
 }

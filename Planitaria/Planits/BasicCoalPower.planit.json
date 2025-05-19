@@ -1,1 +1,41 @@
-{"v":"1.0","d":"x9z23ak8u2...","meta":{"desc":"sample build","planitae":"Satisfactory"}}
+{
+  "items": [
+    {
+      "id": "gen1",
+      "type": "Coal Generator",
+      "x": 120,
+      "y": 120,
+      "rotation": 0,
+      "role": "output",
+      "notes": ""
+    },
+    {
+      "id": "belt1",
+      "type": "Conveyor",
+      "x": 200,
+      "y": 180,
+      "rotation": 0,
+      "role": "input",
+      "notes": ""
+    }
+  ],
+  "connections": [
+    {
+      "from": "gen1",
+      "to": "belt1"
+    }
+  ],
+  "simState": {
+    "gen1": {
+      "satisfied": true,
+      "reason": "output_source",
+      "errors": []
+    },
+    "belt1": {
+      "satisfied": true,
+      "reason": "valid_input",
+      "errors": []
+    }
+  },
+  "notes": "Basic flow test: power \u2192 conveyor"
+}
