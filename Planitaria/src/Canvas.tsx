@@ -27,7 +27,30 @@ function simulate(items, connections) {
   });
 
   let updated = true;
-  while (updated) {
+  
+  const visited = new Set();
+  function detectLoop(node, path = []) {
+    if (visited.has(node)) return false;
+    if (path.includes(node)) return true;
+    visited.add(node);
+    const next = incoming[node] || [];
+    return next.some(n => detectLoop(n, [...path, node]));
+  }
+
+  items.forEach(item => {
+    if (detectLoop(item.id)) {
+      state[item.id].errors.push("loop_detected");
+      state[item.id].reason = "loop_detected";
+    }
+    if (item.role === "input" && incoming[item.id].length === 0) {
+      state[item.id].errors.push("unconnected_input");
+    }
+    if (item.role === "output" && !connections.some(conn => conn.from === item.id)) {
+      state[item.id].errors.push("unused_output");
+    }
+  });
+
+while (updated) {
     updated = false;
     for (let item of items) {
       if (item.role === "input") {
