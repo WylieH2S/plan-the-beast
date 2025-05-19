@@ -1,0 +1,40 @@
+{
+  "name": "Example Build",
+  "items": [
+    {
+      "id": "1",
+      "type": "Miner",
+      "role": "input",
+      "x": 100,
+      "y": 100,
+      "rotation": 0
+    },
+    {
+      "id": "2",
+      "type": "Smelter",
+      "role": "logic",
+      "x": 250,
+      "y": 100,
+      "rotation": 0
+    },
+    {
+      "id": "3",
+      "type": "Constructor",
+      "role": "output",
+      "x": 400,
+      "y": 100,
+      "rotation": 0
+    }
+  ],
+  "connections": [
+    {
+      "from": "1",
+      "to": "2"
+    },
+    {
+      "from": "2",
+      "to": "3"
+    }
+  ],
+  "savedAt": "2025-05-19T17:00:00Z"
+}
