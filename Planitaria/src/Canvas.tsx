@@ -54,7 +54,27 @@ export function Canvas({ items, setItems, setSelectedItem }) {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [showOverlays, setShowOverlays] = useState(true);
 
-  useEffect(() => {
+  
+const [connectMode, setConnectMode] = useState(false);
+const [selectedForLink, setSelectedForLink] = useState(null);
+
+function handleConnectClick(item) {
+  if (!connectMode) return;
+  if (!selectedForLink) {
+    setSelectedForLink(item.id);
+  } else if (selectedForLink === item.id) {
+    setSelectedForLink(null);
+  } else {
+    const newConn = { from: selectedForLink, to: item.id };
+    if (!connections.some(c => c.from === newConn.from && c.to === newConn.to)) {
+      setConnections([...connections, newConn]);
+    }
+    setSelectedForLink(null);
+  }
+}
+
+
+useEffect(() => {
     const saved = localStorage.getItem("planit");
     if (saved) {
       try {
@@ -67,7 +87,27 @@ export function Canvas({ items, setItems, setSelectedItem }) {
     }
   }, []);
 
-  useEffect(() => {
+  
+const [connectMode, setConnectMode] = useState(false);
+const [selectedForLink, setSelectedForLink] = useState(null);
+
+function handleConnectClick(item) {
+  if (!connectMode) return;
+  if (!selectedForLink) {
+    setSelectedForLink(item.id);
+  } else if (selectedForLink === item.id) {
+    setSelectedForLink(null);
+  } else {
+    const newConn = { from: selectedForLink, to: item.id };
+    if (!connections.some(c => c.from === newConn.from && c.to === newConn.to)) {
+      setConnections([...connections, newConn]);
+    }
+    setSelectedForLink(null);
+  }
+}
+
+
+useEffect(() => {
     const result = simulate(items, connections);
     setSimState(result);
   }, [items, connections]);
@@ -123,7 +163,7 @@ export function Canvas({ items, setItems, setSelectedItem }) {
           return (
             <div key={item.id}
               title={showOverlays ? getTooltip(item) : ""}
-              onClick={() => handleClick(item)}
+              onClick={() => connectMode ? handleConnectClick(item) : handleClick(item)}
               onMouseEnter={() => setHoveredItem(item.id)}
               onMouseLeave={() => setHoveredItem(null)}
               style={{
@@ -161,7 +201,7 @@ export function Canvas({ items, setItems, setSelectedItem }) {
       }}>
         <label style={{ marginRight: 10 }}>
           <input type="checkbox" checked={showOverlays} onChange={() => setShowOverlays(!showOverlays)} />
-          Show Overlays
+          Show Overlays</label> <button onClick={() => setConnectMode(!connectMode)} style={{ marginLeft: 20 }}>{connectMode ? "Exit Link Mode" : "Connect Items"}</button>
         </label>
       </div>
     </>
