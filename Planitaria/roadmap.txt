@@ -1,0 +1,86 @@
+Planitaria Roadmap — Updated
+
+📅 Date: 2025-05-19
+🧠 Current Phase: Core Logic + Diagnostic Overlay Integration
+
+────────────────────────────────────────────
+✅ CURRENT STATE
+────────────────────────────────────────────
+
+- Core systems present:
+  - Canvas rendering engine (Canvas.js)
+  - Stencil Tray panel (Tray.js)
+  - Editable Inspector panel (Inspector.js)
+  - Save/Load Planit engine (SaveLoad.js)
+  - Logic simulation and validation (LogicSim.js)
+
+- Continuity files included:
+  - readme_Chloe.md (internal dev tracking)
+  - chloe.delta.json (delta log)
+  - planitaria.meta.json (system metadata)
+
+- Basic Planit (`example.planit`) included for testing.
+
+- LogicSim system integrated:
+  - Role-based state propagation (input/output/power/direction)
+  - Loop detection, self-reference prevention
+  - Visual overlays for satisfied/unsatisfied states
+  - Tooltip + error feedback on stencils
+  - Hook-safe React logic (React 18+)
+
+────────────────────────────────────────────
+🧪 TEST STATUS
+────────────────────────────────────────────
+
+- index.html WILL FAIL when opened via file:// (expected)
+- App runs correctly via:
+    ➜ npm install
+    ➜ npm run dev
+    ➜ http://localhost:5173
+
+- Visual output is currently minimal: loading canvas only
+
+────────────────────────────────────────────
+🚧 UPCOMING MILESTONE — "First Working Load"
+────────────────────────────────────────────
+
+🚩 This milestone marks the point when Planitaria becomes:
+→ A **fully usable**, logic-aware planning environment.
+
+🧩 REQUIREMENTS FOR THIS MILESTONE:
+- Full stencil interaction (drag, drop, select, delete)
+- Working overlay simulation and tooltip system
+- Functional Tray and Inspector panels
+- Snap-to-grid + rotation
+- Connection UI (link two items via click)
+- Save/load from local disk (Planits)
+- Functional layout statistics and error detection
+
+⚙️ Target: `Planitaria_1.0_PreFlight`
+
+────────────────────────────────────────────
+🔜 NEXT STEPS (Priority Ordered)
+────────────────────────────────────────────
+
+1. [ ] Visual Enhancements: Overlay shading + grid refinements
+2. [ ] Editable Inspector fields (rotation, labels, custom notes)
+3. [ ] Connection system click-to-link UI (visual links + editing)
+4. [ ] Snap-to-grid alignment polish + multi-select movement
+5. [ ] Save Planits to disk (export/download .planit format)
+6. [ ] Load Planits from disk (drag/drop or file input)
+7. [ ] Toolbar for toggling overlays, simulation, etc.
+8. [ ] React-based mini-map or navigator panel
+9. [ ] In-app stencil editing + gamepack selection
+10. [ ] Planitaria tutorial system (first-use walkthrough)
+
+────────────────────────────────────────────
+🧩 Longer-Term Targets
+────────────────────────────────────────────
+
+- Planits encryption + password protection
+- Cloud sync engine (future)
+- AI-driven Planit generation
+- PWA + App Store prep
+- Public shareable links (via GitHub Pages or Netlify)
+
+────────────────────────────────────────────
