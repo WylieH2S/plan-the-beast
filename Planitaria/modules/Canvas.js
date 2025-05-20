@@ -56,6 +56,17 @@ export function Canvas() {
   const snapEnabled = settings.snap.enabled;
 
   useEffect(() => {
+    const shotHandler = () => {
+      const canvas = canvasRef.current;
+      canvas.toBlob(blob => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "planitaria_screenshot.png";
+        a.click();
+      });
+    };
+    window.addEventListener("exportScreenshot", shotHandler);
+
     const exportHandler = () => {
       const selectedItems = items.filter(it => multiSelectIds.includes(it.id));
       if (!selectedItems.length) return alert("Select items to export as blueprint.");
@@ -95,6 +106,7 @@ export function Canvas() {
     window.addEventListener("importBlueprint", importHandler);
     window.addEventListener("fitCanvas", fitHandler);
     return () => {
+      window.removeEventListener("exportScreenshot", shotHandler);
       window.removeEventListener("exportBlueprint", exportHandler);
       window.removeEventListener("importBlueprint", importHandler);
       window.removeEventListener("fitCanvas", fitHandler);
@@ -102,6 +114,17 @@ export function Canvas() {
   }, [items, multiSelectIds]);
 
   useEffect(() => {
+    const shotHandler = () => {
+      const canvas = canvasRef.current;
+      canvas.toBlob(blob => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "planitaria_screenshot.png";
+        a.click();
+      });
+    };
+    window.addEventListener("exportScreenshot", shotHandler);
+
     const handleKey = (e) => {
       if ((e.key === "Delete" || e.key === "Backspace") && multiSelectIds.length) {
         setItems(items.filter(it => !multiSelectIds.includes(it.id)));
@@ -128,6 +151,17 @@ export function Canvas() {
   }, [items, multiSelectIds, clipboard]);
 
   useEffect(() => {
+    const shotHandler = () => {
+      const canvas = canvasRef.current;
+      canvas.toBlob(blob => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "planitaria_screenshot.png";
+        a.click();
+      });
+    };
+    window.addEventListener("exportScreenshot", shotHandler);
+
     const interval = setInterval(() => {
       simulateStatuses(items, setItems);
     }, 5000);
@@ -135,6 +169,17 @@ export function Canvas() {
   }, [items]);
 
   useEffect(() => {
+    const shotHandler = () => {
+      const canvas = canvasRef.current;
+      canvas.toBlob(blob => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "planitaria_screenshot.png";
+        a.click();
+      });
+    };
+    window.addEventListener("exportScreenshot", shotHandler);
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -236,6 +281,18 @@ export function Canvas() {
   }
 
   return React.createElement(React.Fragment, null,
+    React.createElement("div", {
+      style: {
+        position: "absolute",
+        top: 5,
+        left: "50%",
+        transform: "translateX(-50%)",
+        color: "#999",
+        fontSize: "12px",
+        zIndex: 99,
+        pointerEvents: "none"
+      }
+    }, "🖱 Ready to Build"),
     React.createElement("canvas", {
       ref: canvasRef,
       width: 1200,

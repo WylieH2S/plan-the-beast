@@ -25,9 +25,9 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
         boxShadow: "0 0 4px #000"
       }
     }, [
-      React.createElement("button", { onClick: onZoomIn }, "+"),
-      React.createElement("button", { onClick: onZoomOut }, "−"),
-      React.createElement("button", { onClick: onReset }, "Reset"),
+      React.createElement("button", { onClick: onZoomIn, title: "Zoom In" }, "+"),
+      React.createElement("button", { onClick: onZoomOut, title: "Zoom Out" }, "−"),
+      React.createElement("button", { onClick: onReset, title: "Reset Zoom & Snap" }, "Reset"),
       React.createElement("label", {}, "Snap"),
       React.createElement("select", {
         value: settings.snap.size,
@@ -62,6 +62,10 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       React.createElement("button", {
         onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint"))
       }, "Import Blueprint"),
+      React.createElement("button", {
+        onClick: () => window.dispatchEvent(new CustomEvent("exportScreenshot")),
+        title: "Export Canvas Image"
+      }, "📷 Screenshot"),
       React.createElement("button", {
         onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas"))
       }, "Fit View")
