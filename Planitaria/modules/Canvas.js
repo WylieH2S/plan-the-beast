@@ -16,12 +16,7 @@ const gridSize = 40;
 function drawGrid(ctx, width, height, settings) {
   ctx.clearRect(0, 0, width, height);
   if (settings.snap.enabled) {
-    ctx.fillStyle =
-      item.role === "input" ? "#229"
-    : item.role === "output" ? "#292"
-    : item.role === "logic" ? "#662"
-    : item.role === "power" ? "#733"
-    : "#222";
+    ctx.fillStyle = "#222";
     for (let x = 0; x < width; x += settings.snap.size) {
       for (let y = 0; y < height; y += settings.snap.size) {
         ctx.fillRect(x - 1, y - 1, 2, 2);
@@ -55,9 +50,11 @@ export function Canvas() {
   const [groupSelectBox, setGroupSelectBox] = useState(null);
   const [hoverItem, setHoverItem] = useState(null);
   const [multiSelectIds, setMultiSelectIds] = useState([]);
-  const snapEnabled = settings.snap.enabled;
   const [clipboard, setClipboard] = useState([]);
-  
+
+  const snapSize = settings.snap.size;
+  const snapEnabled = settings.snap.enabled;
+
   useEffect(() => {
     const exportHandler = () => {
       const selectedItems = items.filter(it => multiSelectIds.includes(it.id));
@@ -130,7 +127,12 @@ export function Canvas() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [items, multiSelectIds, clipboard]);
 
-  const snapSize = settings.snap.size;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      simulateStatuses(items, setItems);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [items]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -144,10 +146,10 @@ export function Canvas() {
     const connections = getConnections();
     for (const conn of connections) {
       const { a, b, type } = conn;
+      if (!settings.overlays.connectionTypes[type]) continue;
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
       ctx.lineTo(b.x, b.y);
-      if (!settings.overlays.connectionTypes[type]) continue;
       ctx.strokeStyle = type === 'power' ? '#ffa500' : type === 'pipe' ? '#0ff' : '#3cf';
       ctx.setLineDash(type === 'pipe' ? [6, 3] : type === 'power' ? [2, 2] : []);
       ctx.lineWidth = 2;
@@ -158,31 +160,26 @@ export function Canvas() {
 
     for (const item of items) {
       ctx.fillStyle =
-      item.role === "input" ? "#229"
-    : item.role === "output" ? "#292"
-    : item.role === "logic" ? "#662"
-    : item.role === "power" ? "#733"
-    :
-        settings.overlays.showStatus && item.status === "starved" ? "#ff0" :
-        settings.overlays.showStatus && item.status === "clogged" ? "#f44" :
-        item.id === selected?.id ? "#6f6" :
-        multiSelectIds.includes(item.id) ? "#0af" : "#888";
+        item.role === "input" ? "#229"
+      : item.role === "output" ? "#292"
+      : item.role === "logic" ? "#662"
+      : item.role === "power" ? "#733"
+      : settings.overlays.showStatus && item.status === "starved" ? "#ff0"
+      : settings.overlays.showStatus && item.status === "clogged" ? "#f44"
+      : item.id === selected?.id ? "#6f6"
+      : multiSelectIds.includes(item.id) ? "#0af"
+      : "#888";
 
       ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
 
       if (settings.overlays.showLabels) {
-        ctx.fillStyle =
-      item.role === "input" ? "#229"
-    : item.role === "output" ? "#292"
-    : item.role === "logic" ? "#662"
-    : item.role === "power" ? "#733"
-    : "#fff";
+        ctx.fillStyle = "#fff";
         ctx.fillText(
-      (item.role === "input" ? "⛏ " :
-       item.role === "output" ? "📦 " :
-       item.role === "logic" ? "⚙ " :
-       item.role === "power" ? "🔌 " : "") + item.type,
-      item.x - 18, item.y + 5);
+          (item.role === "input" ? "⛏ " :
+           item.role === "output" ? "📦 " :
+           item.role === "logic" ? "⚙ " :
+           item.role === "power" ? "🔌 " : "") + item.type,
+          item.x - 18, item.y + 5);
         if (item.note) ctx.fillText(item.note, item.x - 18, item.y + 18);
         if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
       }
@@ -206,13 +203,6 @@ export function Canvas() {
 
     ctx.restore();
   }, [items, selected, settings, multiSelectIds, groupSelectBox]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      simulateStatuses(items, setItems);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [items]);
 
   function handleClick(e) {
     const rect = canvasRef.current.getBoundingClientRect();
@@ -279,15 +269,9 @@ export function Canvas() {
         const hovered = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
         setHoverItem(hovered || null);
         if (groupSelectBox) {
-          const rect = canvasRef.current.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / settings.zoom;
-          const y = (e.clientY - rect.top) / settings.zoom;
           setGroupSelectBox({ ...groupSelectBox, x2: x, y2: y });
         }
         if (draggingId) {
-          const rect = canvasRef.current.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / settings.zoom;
-          const y = (e.clientY - rect.top) / settings.zoom;
           const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
           setItems(items.map(it =>
             it.id === draggingId || multiSelectIds.includes(it.id)
