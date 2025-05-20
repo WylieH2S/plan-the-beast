@@ -8,6 +8,7 @@ import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
 import { SummaryPanel } from "../SummaryPanel.js";
+import { loadGamepack } from "../Gamepack.js";
 import { useHistory } from "../useHistory.js";
 import { loadGamepack } from "../Gamepack.js";
 
@@ -33,6 +34,8 @@ function drawGrid(ctx, width, height) {
 function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems, undoItems, redoItems] = useHistory([]);
+  const [history, setHistory] = useState([[]]);
+  const [gamepack, setGamepack] = useState(loadGamepack("satisfactory"));
   const [selected, setSelected] = useState(null);
   const [settings, setSettings] = useState(defaultSettings);
 
@@ -119,6 +122,7 @@ function Canvas() {
       style: { display: "block", background: "#111", margin: "auto" }
     }),
     React.createElement(Toolbar, {
+      onGamepackChange: name => setGamepack(loadGamepack(name)),
       onZoomIn: () => setSettings({ ...settings, zoom: settings.zoom + 0.1 }),
       onZoomOut: () => setSettings({ ...settings, zoom: Math.max(0.2, settings.zoom - 0.1) }),
       onReset: () => setSettings(defaultSettings),
@@ -130,7 +134,7 @@ function Canvas() {
     }, [
       React.createElement("button", {
         key: "save",
-        onClick: () => exportPlanit(items),
+        onClick: () => exportPlanit(items, history),
         style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
       }, "Save"),
       React.createElement("button", {
@@ -146,11 +150,11 @@ function Canvas() {
       React.createElement("button", {
         key: "load",
 
-        onClick: () => importPlanit(setItems),
+        onClick: () => importPlanit((newItems, newHistory) => { setItems(newItems); setHistory(newHistory); }),
         style: { padding: "6px", background: "#333", color: "#fff" }
       }, "Load")
     ]),
-    React.createElement(Tray, { onAdd: addItem }),
+    React.createElement(Tray, { onAdd: addItem, gamepack }),
     React.createElement(Inspector, { selectedItem: selected, updateItem }),
     React.createElement(Minimap, { items }),
     React.createElement(SummaryPanel, { items })

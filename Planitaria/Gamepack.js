@@ -9,5 +9,11 @@ export function loadGamepack(name) {
       ]
     };
   }
+  if (name === "empty") {
+    return {
+      name: "Empty Test Pack",
+      stencils: []
+    };
+  }
   return { name: "Unknown", stencils: [] };
 }

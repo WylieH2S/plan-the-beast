@@ -1,12 +1,15 @@
 {
   "last_updated": "2025-05-20",
   "changes": [
-    "Regenerated continuity files to reflect real module state."
+    "Integrated persistent undo/redo",
+    "Added dynamic Tray via Gamepack loader",
+    "Planit file validation",
+    "Continuity resynced"
   ],
   "todo": [
-    "Implement undo/redo system",
-    "Refactor gamepack loader",
-    "Document state transitions"
+    "Gamepack UI polishing",
+    "Custom tray editor",
+    "State diff viewer"
   ],
   "verified_modules": [
     "AIHooks.js",
@@ -22,6 +25,7 @@
     "modules/Inspector.js",
     "modules/LogicSim.js",
     "modules/SaveLoad.js",
-    "modules/Tray.js"
+    "modules/Tray.js",
+    "useHistory.js"
   ]
 }

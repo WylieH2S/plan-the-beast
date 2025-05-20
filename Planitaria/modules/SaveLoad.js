@@ -1,5 +1,5 @@
-export function exportPlanit(items) {
-  const data = JSON.stringify(items, null, 2);
+export function exportPlanit(items, history) {
+  const data = JSON.stringify({ items, history }, null, 2);
   const blob = new Blob([data], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -19,7 +19,8 @@ export function importPlanit(callback) {
     reader.onload = () => {
       try {
         const data = JSON.parse(reader.result);
-        callback(data);
+        if (!data.items || !Array.isArray(data.items)) throw new Error("Invalid Planit format.");
+        callback(data.items, data.history || [data.items]);  // fallback for older planits
       } catch (err) {
         alert("Failed to load Planit: Invalid format.");
       }

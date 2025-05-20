@@ -1,6 +1,6 @@
 import React from "https://esm.sh/react@18.2.0";
 
-export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings }) {
+export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, onGamepackChange }) {
   return React.createElement("div", {
     style: {
       position: "absolute",
@@ -20,6 +20,13 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings })
         const newState = { ...settings.overlays, showConnections: !settings.overlays.showConnections };
         setSettings({ ...settings, overlays: newState });
       }
-    }, settings.overlays.showConnections ? "Hide Lines" : "Show Lines")
+    }, settings.overlays.showConnections ? "Hide Lines" : "Show Lines"),
+    React.createElement("select", {
+      onChange: e => onGamepackChange(e.target.value),
+      defaultValue: "satisfactory"
+    }, [
+      React.createElement("option", { value: "satisfactory" }, "Satisfactory"),
+      React.createElement("option", { value: "empty" }, "Empty")
+    ])
   ]);
 }

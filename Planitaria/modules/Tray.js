@@ -1,11 +1,7 @@
 import React from "https://esm.sh/react@18.2.0";
-const STENCILS = [
-  { type: "Miner", role: "input" },
-  { type: "Smelter", role: "logic" },
-  { type: "Constructor", role: "output" }
-];
 
-function Tray({ onAdd }) {
+export function Tray({ onAdd, gamepack }) {
+  if (!gamepack || !gamepack.stencils) return null;
   return React.createElement("div", {
     style: {
       position: "absolute",
@@ -20,8 +16,8 @@ function Tray({ onAdd }) {
       zIndex: 10
     }
   }, [
-    React.createElement("h4", { key: "title" }, "Tray"),
-    ...STENCILS.map((s, idx) =>
+    React.createElement("h4", { key: "title" }, gamepack.name),
+    ...gamepack.stencils.map((s, idx) =>
       React.createElement("button", {
         key: idx,
         onClick: () => onAdd({ ...s }),
@@ -40,5 +36,3 @@ function Tray({ onAdd }) {
     )
   ]);
 }
-window.Tray = Tray;
-export { Tray };
