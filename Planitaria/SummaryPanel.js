@@ -21,7 +21,9 @@ export function SummaryPanel({ items }) {
       color: "#fff",
       borderRadius: "6px",
       border: "1px solid #555",
-      fontSize: "14px",
+      fontSize: "13px",
+      minWidth: "180px",
+      boxShadow: "0 0 8px #000",
       zIndex: 10
     }
   }, [

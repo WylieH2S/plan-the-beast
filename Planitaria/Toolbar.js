@@ -15,7 +15,8 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       left: "50%",
       transform: "translateX(-50%)",
       display: "flex",
-      gap: "8px",
+      flexWrap: "wrap",
+      gap: "6px",
       zIndex: 30
     }
   }, [
