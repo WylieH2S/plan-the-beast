@@ -44,7 +44,7 @@ export function Canvas() {
   const [history, setHistory] = useState([[]]);
   const [gamepack, setGamepack] = useState(loadGamepack("satisfactory"));
   const [selected, setSelected] = useState(null);
-  const [settings, setSettings] = useState(defaultSettings);
+  const [settings, setSettings] = useState({ ...defaultSettings, zoom: 0.8 });
   const [connectionTarget, setConnectionTarget] = useState(null);
   const [draggingId, setDraggingId] = useState(null);
   const [groupSelectBox, setGroupSelectBox] = useState(null);
@@ -208,7 +208,7 @@ export function Canvas() {
   }
 
   function addItem({ type, role }) {
-    const id = Date.now().toString();
+    const id = Date.now().toString().slice(-6);
     const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
     setItems([...items, {
       id, type, role,
