@@ -4,6 +4,10 @@ import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
 import { calculateConnections } from "../ConnectionVisualizer.js";
+import { defaultSettings } from "../Settings.js";
+import { Minimap } from "../Minimap.js";
+import { Toolbar } from "../Toolbar.js";
+import { SummaryPanel } from "../SummaryPanel.js";
 
 const gridSize = 40;
 
@@ -28,15 +32,18 @@ function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [showConnections, setShowConnections] = useState(true);
+  const [settings, setSettings] = useState(defaultSettings);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    drawGrid(ctx, canvas.width, canvas.height);
+    ctx.save();
+    ctx.scale(settings.zoom, settings.zoom);
 
-    if (showConnections) {
+    drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom);
+
+    if (settings.overlays.showConnections) {
       const connections = calculateConnections(items);
       ctx.strokeStyle = "#3cf";
       ctx.lineWidth = 2;
@@ -51,17 +58,31 @@ function Canvas() {
 
     for (const item of items) {
       ctx.fillStyle =
-        item.status === "starved" ? "#ff0" :
-        item.status === "clogged" ? "#f44" :
+        settings.overlays.showStatus && item.status === "starved" ? "#ff0" :
+        settings.overlays.showStatus && item.status === "clogged" ? "#f44" :
         item.id === selected?.id ? "#6f6" : "#888";
 
       ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
-      ctx.fillStyle = "#fff";
-      ctx.fillText(item.type, item.x - 18, item.y + 5);
-      if (item.note) ctx.fillText(item.note, item.x - 18, item.y + 18);
-      if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
+
+      if (settings.overlays.showLabels) {
+        ctx.fillStyle = "#fff";
+        ctx.fillText(item.type, item.x - 18, item.y + 5);
+        if (item.note) ctx.fillText(item.note, item.x - 18, item.y + 18);
+        if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
+      }
+
+      // Rotation arrow
+      ctx.beginPath();
+      ctx.moveTo(item.x, item.y);
+      const angle = (item.rotation || 0) * Math.PI / 180;
+      const len = 15;
+      ctx.lineTo(item.x + len * Math.cos(angle), item.y + len * Math.sin(angle));
+      ctx.strokeStyle = "#0af";
+      ctx.stroke();
     }
-  }, [items, selected, showConnections]);
+
+    ctx.restore();
+  }, [items, selected, settings]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -72,8 +93,8 @@ function Canvas() {
 
   function handleClick(e) {
     const rect = canvasRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = (e.clientX - rect.left) / settings.zoom;
+    const y = (e.clientY - rect.top) / settings.zoom;
     const clicked = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
     setSelected(clicked || null);
   }
@@ -95,35 +116,31 @@ function Canvas() {
       onClick: handleClick,
       style: { display: "block", background: "#111", margin: "auto" }
     }),
+    React.createElement(Toolbar, {
+      onZoomIn: () => setSettings({ ...settings, zoom: settings.zoom + 0.1 }),
+      onZoomOut: () => setSettings({ ...settings, zoom: Math.max(0.2, settings.zoom - 0.1) }),
+      onReset: () => setSettings(defaultSettings),
+      settings,
+      setSettings
+    }),
     React.createElement("div", {
-      style: {
-        position: "absolute", top: 10, right: 10, zIndex: 20
-      }
+      style: { position: "absolute", top: 10, right: 10, zIndex: 20 }
     }, [
       React.createElement("button", {
         key: "save",
         onClick: () => exportPlanit(items),
-        style: {
-          padding: "6px", marginRight: "6px", background: "#333", color: "#fff"
-        }
+        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
       }, "Save"),
       React.createElement("button", {
         key: "load",
         onClick: () => importPlanit(setItems),
-        style: {
-          padding: "6px", marginRight: "6px", background: "#333", color: "#fff"
-        }
-      }, "Load"),
-      React.createElement("button", {
-        key: "toggle",
-        onClick: () => setShowConnections(!showConnections),
-        style: {
-          padding: "6px", background: "#444", color: "#ccc"
-        }
-      }, showConnections ? "Hide Connections" : "Show Connections")
+        style: { padding: "6px", background: "#333", color: "#fff" }
+      }, "Load")
     ]),
     React.createElement(Tray, { onAdd: addItem }),
-    React.createElement(Inspector, { selectedItem: selected, updateItem })
+    React.createElement(Inspector, { selectedItem: selected, updateItem }),
+    React.createElement(Minimap, { items }),
+    React.createElement(SummaryPanel, { items })
   );
 }
 

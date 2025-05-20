@@ -1,2 +1,8 @@
-// Settings.js - auto-restored placeholder
-export default function Settings() { return null; }
+export const defaultSettings = {
+  overlays: {
+    showConnections: true,
+    showLabels: true,
+    showStatus: true
+  },
+  zoom: 1.0
+};
