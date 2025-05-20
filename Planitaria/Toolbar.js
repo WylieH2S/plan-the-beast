@@ -67,6 +67,10 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
         title: "Export Canvas Image"
       }, "📷 Screenshot"),
       React.createElement("button", {
+        onClick: () => window.dispatchEvent(new CustomEvent("startTutorial")),
+        title: "Start Tutorial"
+      }, "🎓 Tutorial"),
+      React.createElement("button", {
         onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas"))
       }, "Fit View")
     ]),

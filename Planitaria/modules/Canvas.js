@@ -56,6 +56,10 @@ export function Canvas() {
   const snapEnabled = settings.snap.enabled;
 
   useEffect(() => {
+    const tutorialStartHandler = () => {
+      import("./Tutorial.js").then(mod => mod.startTutorial());
+    };
+    window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
       canvas.toBlob(blob => {
@@ -106,6 +110,7 @@ export function Canvas() {
     window.addEventListener("importBlueprint", importHandler);
     window.addEventListener("fitCanvas", fitHandler);
     return () => {
+      window.removeEventListener("startTutorial", tutorialStartHandler);
       window.removeEventListener("exportScreenshot", shotHandler);
       window.removeEventListener("exportBlueprint", exportHandler);
       window.removeEventListener("importBlueprint", importHandler);
@@ -114,6 +119,10 @@ export function Canvas() {
   }, [items, multiSelectIds]);
 
   useEffect(() => {
+    const tutorialStartHandler = () => {
+      import("./Tutorial.js").then(mod => mod.startTutorial());
+    };
+    window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
       canvas.toBlob(blob => {
@@ -151,6 +160,10 @@ export function Canvas() {
   }, [items, multiSelectIds, clipboard]);
 
   useEffect(() => {
+    const tutorialStartHandler = () => {
+      import("./Tutorial.js").then(mod => mod.startTutorial());
+    };
+    window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
       canvas.toBlob(blob => {
@@ -169,6 +182,10 @@ export function Canvas() {
   }, [items]);
 
   useEffect(() => {
+    const tutorialStartHandler = () => {
+      import("./Tutorial.js").then(mod => mod.startTutorial());
+    };
+    window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
       canvas.toBlob(blob => {
