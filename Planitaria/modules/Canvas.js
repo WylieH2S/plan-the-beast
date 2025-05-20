@@ -8,6 +8,7 @@ import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
 import { SummaryPanel } from "../SummaryPanel.js";
+import { addConnection, getConnections } from "../ConnectionVisualizer.js";
 import { loadGamepack } from "../Gamepack.js";
 import { useHistory } from "../useHistory.js";
 import { loadGamepack } from "../Gamepack.js";
@@ -34,6 +35,8 @@ function drawGrid(ctx, width, height) {
 function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems, undoItems, redoItems] = useHistory([]);
+  const [connectionTarget, setConnectionTarget] = useState(null);
+  const snap = 40;
   const [history, setHistory] = useState([[]]);
   const [gamepack, setGamepack] = useState(loadGamepack("satisfactory"));
   const [selected, setSelected] = useState(null);
@@ -49,7 +52,7 @@ function Canvas() {
     drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom);
 
     if (settings.overlays.showConnections) {
-      const connections = calculateConnections(items);
+      const connections = getConnections();
       ctx.strokeStyle = "#3cf";
       ctx.lineWidth = 2;
       for (const [a, b] of connections) {
@@ -101,12 +104,19 @@ function Canvas() {
     const x = (e.clientX - rect.left) / settings.zoom;
     const y = (e.clientY - rect.top) / settings.zoom;
     const clicked = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
-    setSelected(clicked || null);
+    if (connectionTarget && clicked) {
+      addConnection(connectionTarget, clicked);
+      setConnectionTarget(null);
+    } else {
+      setSelected(clicked || null);
+      setConnectionTarget(clicked || null);
+    }
   }
 
   function addItem(type, role) {
     const id = Date.now().toString();
-    setItems([...items, { id, type, role, x: 200, y: 200, rotation: 0, status: "ok", throughput: 0 }]);
+    const snapped = (v) => Math.round(v / snap) * snap;
+    setItems([...items, { id, type, role, x: snapped(200), y: snapped(200), rotation: 0, status: "ok", throughput: 0 }]);
   }
 
   function updateItem(newProps) {
