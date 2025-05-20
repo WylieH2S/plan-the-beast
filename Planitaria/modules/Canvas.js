@@ -3,11 +3,11 @@ import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
+import { getConnections, addConnection, removeConnectionByCoords, loadConnections } from "../ConnectionVisualizer.js";
 import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
 import { SummaryPanel } from "../SummaryPanel.js";
-import { addConnection, getConnections } from "../ConnectionVisualizer.js";
 import { loadGamepack } from "../Gamepack.js";
 import { useHistory } from "../useHistory.js";
 
@@ -16,7 +16,7 @@ const gridSize = 40;
 function drawGrid(ctx, width, height, settings) {
   ctx.clearRect(0, 0, width, height);
   if (settings.snap.enabled) {
-    ctx.fillStyle = '#222';
+    ctx.fillStyle = "#222";
     for (let x = 0; x < width; x += settings.snap.size) {
       for (let y = 0; y < height; y += settings.snap.size) {
         ctx.fillRect(x - 1, y - 1, 2, 2);
@@ -38,16 +38,19 @@ function drawGrid(ctx, width, height, settings) {
   }
 }
 
-function Canvas() {
+export function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems, undoItems, redoItems] = useHistory([]);
-  const [connectionTarget, setConnectionTarget] = useState(null);
-  const [draggingId, setDraggingId] = useState(null);
-  const snap = 40;
   const [history, setHistory] = useState([[]]);
   const [gamepack, setGamepack] = useState(loadGamepack("satisfactory"));
   const [selected, setSelected] = useState(null);
   const [settings, setSettings] = useState(defaultSettings);
+  const [connectionTarget, setConnectionTarget] = useState(null);
+  const [draggingId, setDraggingId] = useState(null);
+  const [groupSelectBox, setGroupSelectBox] = useState(null);
+  const [multiSelectIds, setMultiSelectIds] = useState([]);
+  const snapEnabled = settings.snap.enabled;
+  const snapSize = settings.snap.size;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -58,24 +61,23 @@ function Canvas() {
 
     drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom, settings);
 
-    if (settings.overlays.showConnections) {
-      const connections = getConnections();
-      ctx.strokeStyle = "#3cf";
-      ctx.lineWidth = 2;
-      for (const [a, b] of connections) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-      ctx.lineWidth = 1;
+    const connections = getConnections();
+    ctx.strokeStyle = "#3cf";
+    ctx.lineWidth = 2;
+    for (const [a, b] of connections) {
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
     }
+    ctx.lineWidth = 1;
 
     for (const item of items) {
       ctx.fillStyle =
         settings.overlays.showStatus && item.status === "starved" ? "#ff0" :
         settings.overlays.showStatus && item.status === "clogged" ? "#f44" :
-        item.id === selected?.id ? "#6f6" : "#888";
+        item.id === selected?.id ? "#6f6" :
+        multiSelectIds.includes(item.id) ? "#0af" : "#888";
 
       ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
 
@@ -86,7 +88,6 @@ function Canvas() {
         if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
       }
 
-      // Rotation arrow
       ctx.beginPath();
       ctx.moveTo(item.x, item.y);
       const angle = (item.rotation || 0) * Math.PI / 180;
@@ -96,8 +97,16 @@ function Canvas() {
       ctx.stroke();
     }
 
+    if (groupSelectBox) {
+      const { x1, y1, x2, y2 } = groupSelectBox;
+      ctx.setLineDash([4, 2]);
+      ctx.strokeStyle = "#0af";
+      ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+      ctx.setLineDash([]);
+    }
+
     ctx.restore();
-  }, [items, selected, settings]);
+  }, [items, selected, settings, multiSelectIds, groupSelectBox]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -120,10 +129,17 @@ function Canvas() {
     }
   }
 
-  function addItem(type, role) {
+  function addItem({ type, role }) {
     const id = Date.now().toString();
-    const snapped = (v) => Math.round(v / snap) * snap;
-    setItems([...items, { id, type, role, x: snapped(200), y: snapped(200), rotation: 0, status: "ok", throughput: 0 }]);
+    const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
+    setItems([...items, {
+      id, type, role,
+      x: snapped(200),
+      y: snapped(200),
+      rotation: 0,
+      status: "ok",
+      throughput: 0
+    }]);
   }
 
   function updateItem(newProps) {
@@ -132,36 +148,69 @@ function Canvas() {
 
   return React.createElement(React.Fragment, null,
     React.createElement("canvas", {
-      onMouseDown: (e) => {
-        if (e.button !== 0) return;
-        const rect = canvasRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / settings.zoom;
-        const y = (e.clientY - rect.top) / settings.zoom;
-        const target = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
-        if (target) setDraggingId(target.id);
-      },
-      onMouseMove: (e) => {
-        if (!draggingId) return;
-        const rect = canvasRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / settings.zoom;
-        const y = (e.clientY - rect.top) / settings.zoom;
-        const snapped = v => settings.snap.enabled ? Math.round(v / settings.snap.size) * settings.snap.size : v;
-        setItems(items.map(it => it.id === draggingId ? { ...it, x: snapped(x), y: snapped(y) } : it));
-      },
-      onMouseUp: () => setDraggingId(null),
       ref: canvasRef,
       width: 1200,
       height: 800,
       onClick: handleClick,
+      onContextMenu: (e) => {
+        e.preventDefault();
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / settings.zoom;
+        const y = (e.clientY - rect.top) / settings.zoom;
+        removeConnectionByCoords(x, y);
+      },
+      onMouseDown: (e) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / settings.zoom;
+        const y = (e.clientY - rect.top) / settings.zoom;
+        if (e.shiftKey) {
+          setGroupSelectBox({ x1: x, y1: y, x2: x, y2: y });
+        } else {
+          const target = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
+          if (target) {
+            setDraggingId(target.id);
+            setSelected(target);
+          }
+        }
+      },
+      onMouseMove: (e) => {
+        if (groupSelectBox) {
+          const rect = canvasRef.current.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / settings.zoom;
+          const y = (e.clientY - rect.top) / settings.zoom;
+          setGroupSelectBox({ ...groupSelectBox, x2: x, y2: y });
+        }
+        if (draggingId) {
+          const rect = canvasRef.current.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / settings.zoom;
+          const y = (e.clientY - rect.top) / settings.zoom;
+          const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
+          setItems(items.map(it =>
+            it.id === draggingId || multiSelectIds.includes(it.id)
+              ? { ...it, x: snapped(x), y: snapped(y) }
+              : it
+          ));
+        }
+      },
+      onMouseUp: () => {
+        if (groupSelectBox) {
+          const { x1, y1, x2, y2 } = groupSelectBox;
+          const bounds = [Math.min(x1, x2), Math.min(y1, y2), Math.max(x1, x2), Math.max(y1, y2)];
+          const ids = items.filter(it => it.x >= bounds[0] && it.x <= bounds[2] && it.y >= bounds[1] && it.y <= bounds[3]).map(it => it.id);
+          setMultiSelectIds(ids);
+          setGroupSelectBox(null);
+        }
+        setDraggingId(null);
+      },
       style: { display: "block", background: "#111", margin: "auto" }
     }),
     React.createElement(Toolbar, {
-      onGamepackChange: name => setGamepack(loadGamepack(name)),
       onZoomIn: () => setSettings({ ...settings, zoom: settings.zoom + 0.1 }),
       onZoomOut: () => setSettings({ ...settings, zoom: Math.max(0.2, settings.zoom - 0.1) }),
       onReset: () => setSettings(defaultSettings),
       settings,
-      setSettings
+      setSettings,
+      onGamepackChange: name => setGamepack(loadGamepack(name))
     }),
     React.createElement("div", {
       style: { position: "absolute", top: 10, right: 10, zIndex: 20 }
@@ -172,19 +221,12 @@ function Canvas() {
         style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
       }, "Save"),
       React.createElement("button", {
-        key: "undo",
-        onClick: () => undoItems(),
-        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
-      }, "Undo"),
-      React.createElement("button", {
-        key: "redo",
-        onClick: () => redoItems(),
-        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
-      }, "Redo"),
-      React.createElement("button", {
         key: "load",
-
-        onClick: () => importPlanit((newItems, newHistory) => { setItems(newItems); setHistory(newHistory); }),
+        onClick: () => importPlanit((newItems, newHistory, conns) => {
+          setItems(newItems);
+          setHistory(newHistory);
+          loadConnections(conns, newItems);
+        }),
         style: { padding: "6px", background: "#333", color: "#fff" }
       }, "Load")
     ]),
@@ -194,5 +236,3 @@ function Canvas() {
     React.createElement(SummaryPanel, { items })
   );
 }
-
-export { Canvas };
