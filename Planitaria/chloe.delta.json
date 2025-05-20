@@ -1,19 +1,16 @@
 {
-  "date": "2025-05-19",
-  "changes": [
-    "Added role-aware logic validation to Canvas.tsx",
-    "Integrated diagnostic tagging (simState.reason, .errors)",
-    "Enabled persistent layout for Tray and Inspector",
-    "Implemented visibility toggles for UI panels",
-    "Validated structure against Planitaria 11 baseline",
-    "Upgraded readme_Chloe.md to represent current build",
-    "Prepared full continuity file support"
+  "last_updated": "2025-05-19",
+  "changes": [],
+  "todo": [
+    "Fix logic integration in Canvas",
+    "Verify mount root in index.html",
+    "Restore save/load validation"
+  ],
+  "verified_modules": [
+    "Canvas.js",
+    "Inspector.js",
+    "LogicSim.js",
+    "SaveLoad.js",
+    "Tray.js"
   ]
 }
-
----
-🧠 This build adheres to the Simulated Persistent Memory Protocol:
-1. readme_Chloe.md, chloe.delta.json, and planitaria.meta.json are updated with each build.
-2. Build .zip files are saved and archived to GitHub or local.
-3. Uploading the latest .zip allows the AI to fully resume from prior context.
----

@@ -1,41 +1,20 @@
 {
-  "planitariaVersion": "core-validated-logic-2025-05-19",
-  "features": {
-    "canvas": true,
-    "tray": true,
-    "inspector": true,
-    "connections": true,
-    "validation": true,
-    "simulation": true,
-    "diagnosticOverlays": true,
-    "persistedUI": true
+  "build_id": "Planitaria_41",
+  "modules": [
+    "Canvas.js",
+    "Inspector.js",
+    "LogicSim.js",
+    "SaveLoad.js",
+    "Tray.js"
+  ],
+  "module_hashes": {
+    "Canvas.js": "a408dbde9040b209cff76a9faf3a29fc4d8ebd3318fe0080f9f50b31841534d1",
+    "Inspector.js": "b2cba7401b3ed6269c2198df9035d61bc4e775d7e429288b4eca70e086fac2e8",
+    "LogicSim.js": "c5cf7fdb30e5bc2ff16a1a47cc03ce655301045d40fa08f35c84f8808ed18a00",
+    "SaveLoad.js": "65e520b00be23409601a0c2bc60398f093f41e5de60637f5303bf89d065b8dd3",
+    "Tray.js": "30556dd8cf70395c1a3c8140f4a60f9d1d6c6995f1a1104d617a030a8dc0e8a2"
   },
-  "diagnostics": [
-    "missing_input",
-    "loop_detected",
-    "invalid_connection",
-    "self_loop"
-  ],
-  "ui": [
-    "movablePanels",
-    "visibilityToggles",
-    "localStorageLayout"
-  ],
-  "dataStorage": [
-    "planitJSON",
-    "base64Save",
-    "localDownload"
-  ],
-  "continuityFiles": [
-    "readme_Chloe.md",
-    "chloe.delta.json",
-    "planitaria.meta.json"
-  ]
+  "launch_state": "incomplete_logic",
+  "milestone": "pre-1.0-functional",
+  "last_verified_by": "AI continuity sweep"
 }
-
----
-🧠 This build adheres to the Simulated Persistent Memory Protocol:
-1. readme_Chloe.md, chloe.delta.json, and planitaria.meta.json are updated with each build.
-2. Build .zip files are saved and archived to GitHub or local.
-3. Uploading the latest .zip allows the AI to fully resume from prior context.
----
