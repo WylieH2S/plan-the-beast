@@ -22,7 +22,16 @@ export function Inspector({ selectedItem, updateItem, multi }) {
       React.createElement("h4", {}, "Connection"),
       React.createElement("div", {}, `From: ${selectedItem.a.type}`),
       React.createElement("div", {}, `To: ${selectedItem.b.type}`),
-      React.createElement("div", {}, `Type: ${selectedItem.type}`)
+      React.createElement("label", {}, "Type:"),
+  React.createElement("select", {
+    value: selectedItem.type,
+    onChange: (e) => updateItem({ ...selectedItem, type: e.target.value }),
+    style: { width: "100%", marginBottom: "10px" }
+  }, [
+    React.createElement("option", { value: "belt" }, "Belt"),
+    React.createElement("option", { value: "power" }, "Power"),
+    React.createElement("option", { value: "pipe" }, "Pipe")
+  ])
     ]);
   }
 
