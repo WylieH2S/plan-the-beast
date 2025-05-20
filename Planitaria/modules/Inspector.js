@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "https://esm.sh/react@18.2.0";
 export function Inspector({ selectedItem, updateItem, multi }) {
   if (!selectedItem && (!multi || !multi.length)) return null;
 
+  // Show connection view if a connection object is selected
   if (selectedItem && selectedItem.a && selectedItem.b) {
     return React.createElement("div", {
       style: {
@@ -25,9 +26,7 @@ export function Inspector({ selectedItem, updateItem, multi }) {
     ]);
   }
 
-{ selectedItem, updateItem, multi }) {
-  if (!selectedItem && (!multi || !multi.length)) return null;
-
+  // Show multi-select summary
   if (multi && multi.length > 1) {
     const roles = multi.map(it => it.role);
     const types = multi.map(it => it.type);
@@ -52,6 +51,7 @@ export function Inspector({ selectedItem, updateItem, multi }) {
     ]);
   }
 
+  // Default inspector for a single item
   const [label, setLabel] = useState("");
   const [note, setNote] = useState("");
   const [rotation, setRotation] = useState(0);

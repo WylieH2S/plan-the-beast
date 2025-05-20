@@ -100,11 +100,6 @@ export function Canvas() {
       ctx.stroke();
     }
     ctx.setLineDash([]);
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
-      ctx.stroke();
-    }
     ctx.lineWidth = 1;
 
     for (const item of items) {
