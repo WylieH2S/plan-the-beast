@@ -3,6 +3,31 @@ import React, { useState, useEffect } from "https://esm.sh/react@18.2.0";
 export function Inspector({ selectedItem, updateItem, multi }) {
   if (!selectedItem && (!multi || !multi.length)) return null;
 
+  if (selectedItem && selectedItem.a && selectedItem.b) {
+    return React.createElement("div", {
+      style: {
+        position: "absolute",
+        right: 10,
+        top: 10,
+        width: "260px",
+        background: "#222",
+        padding: "12px",
+        color: "#fff",
+        border: "1px solid #555",
+        borderRadius: "6px",
+        zIndex: 10
+      }
+    }, [
+      React.createElement("h4", {}, "Connection"),
+      React.createElement("div", {}, `From: ${selectedItem.a.type}`),
+      React.createElement("div", {}, `To: ${selectedItem.b.type}`),
+      React.createElement("div", {}, `Type: ${selectedItem.type}`)
+    ]);
+  }
+
+{ selectedItem, updateItem, multi }) {
+  if (!selectedItem && (!multi || !multi.length)) return null;
+
   if (multi && multi.length > 1) {
     const roles = multi.map(it => it.role);
     const types = multi.map(it => it.type);

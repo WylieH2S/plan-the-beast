@@ -3,7 +3,7 @@ import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
-import { getConnections, addConnection, removeConnectionByCoords, loadConnections } from "../ConnectionVisualizer.js";
+import { getConnections, addConnection, removeConnectionByCoords, loadConnections, cycleConnectionType } from "../ConnectionVisualizer.js";
 import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
@@ -89,9 +89,17 @@ export function Canvas() {
     drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom, settings);
 
     const connections = getConnections();
-    ctx.strokeStyle = "#3cf";
-    ctx.lineWidth = 2;
-    for (const [a, b] of connections) {
+    for (const conn of connections) {
+      const { a, b, type } = conn;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = type === 'power' ? '#ffa500' : type === 'pipe' ? '#0ff' : '#3cf';
+      ctx.setLineDash(type === 'pipe' ? [6, 3] : type === 'power' ? [2, 2] : []);
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
       ctx.lineTo(b.x, b.y);
@@ -184,7 +192,7 @@ export function Canvas() {
         const rect = canvasRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left) / settings.zoom;
         const y = (e.clientY - rect.top) / settings.zoom;
-        removeConnectionByCoords(x, y);
+        cycleConnectionType(x, y);
       },
       onMouseDown: (e) => {
         const rect = canvasRef.current.getBoundingClientRect();
