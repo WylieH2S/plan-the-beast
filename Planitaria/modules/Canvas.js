@@ -1,7 +1,6 @@
-
-import React, { useState, useRef, useEffect } from "https://esm.sh/react@18.2.0?bundle";
-import { Inspector } from "./Inspector.js";
+import React, { useRef, useState, useEffect } from "https://esm.sh/react@18.2.0";
 import { Tray } from "./Tray.js";
+import { Inspector } from "./Inspector.js";
 
 const gridSize = 40;
 
@@ -22,13 +21,14 @@ function drawGrid(ctx, width, height) {
   }
 }
 
-export function Canvas() {
+function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
     drawGrid(ctx, canvas.width, canvas.height);
     for (const item of items) {
@@ -68,3 +68,6 @@ export function Canvas() {
     React.createElement(Inspector, { selectedItem: selected, updateItem })
   );
 }
+
+window.Canvas = Canvas;
+export { Canvas };

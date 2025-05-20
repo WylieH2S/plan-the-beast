@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "https://esm.sh/react";
-
-export function Inspector({ selectedItem, updateItem }) {
+import React, { useState, useEffect } from "https://esm.sh/react@18.2.0";
+function Inspector({ selectedItem, updateItem }) {
   const [label, setLabel] = useState("");
   const [note, setNote] = useState("");
 
@@ -45,3 +44,5 @@ export function Inspector({ selectedItem, updateItem }) {
     })
   ]);
 }
+window.Inspector = Inspector;
+export { Inspector };

@@ -1,12 +1,11 @@
-import React from "https://esm.sh/react";
-
+import React from "https://esm.sh/react@18.2.0";
 const STENCILS = [
   { type: "Miner", role: "input" },
   { type: "Smelter", role: "logic" },
   { type: "Constructor", role: "output" }
 ];
 
-export function Tray({ onAdd }) {
+function Tray({ onAdd }) {
   return React.createElement("div", {
     style: {
       position: "absolute",
@@ -41,3 +40,5 @@ export function Tray({ onAdd }) {
     )
   ]);
 }
+window.Tray = Tray;
+export { Tray };
