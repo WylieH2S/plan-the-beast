@@ -8,6 +8,8 @@ import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
 import { SummaryPanel } from "../SummaryPanel.js";
+import { useHistory } from "../useHistory.js";
+import { loadGamepack } from "../Gamepack.js";
 
 const gridSize = 40;
 
@@ -30,7 +32,7 @@ function drawGrid(ctx, width, height) {
 
 function Canvas() {
   const canvasRef = useRef(null);
-  const [items, setItems] = useState([]);
+  const [items, setItems, undoItems, redoItems] = useHistory([]);
   const [selected, setSelected] = useState(null);
   const [settings, setSettings] = useState(defaultSettings);
 
@@ -132,7 +134,18 @@ function Canvas() {
         style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
       }, "Save"),
       React.createElement("button", {
+        key: "undo",
+        onClick: () => undoItems(),
+        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
+      }, "Undo"),
+      React.createElement("button", {
+        key: "redo",
+        onClick: () => redoItems(),
+        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
+      }, "Redo"),
+      React.createElement("button", {
         key: "load",
+
         onClick: () => importPlanit(setItems),
         style: { padding: "6px", background: "#333", color: "#fff" }
       }, "Load")
