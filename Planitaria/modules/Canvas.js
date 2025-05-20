@@ -16,7 +16,12 @@ const gridSize = 40;
 function drawGrid(ctx, width, height, settings) {
   ctx.clearRect(0, 0, width, height);
   if (settings.snap.enabled) {
-    ctx.fillStyle = "#222";
+    ctx.fillStyle =
+      item.role === "input" ? "#229"
+    : item.role === "output" ? "#292"
+    : item.role === "logic" ? "#662"
+    : item.role === "power" ? "#733"
+    : "#222";
     for (let x = 0; x < width; x += settings.snap.size) {
       for (let y = 0; y < height; y += settings.snap.size) {
         ctx.fillRect(x - 1, y - 1, 2, 2);
@@ -152,6 +157,11 @@ export function Canvas() {
 
     for (const item of items) {
       ctx.fillStyle =
+      item.role === "input" ? "#229"
+    : item.role === "output" ? "#292"
+    : item.role === "logic" ? "#662"
+    : item.role === "power" ? "#733"
+    :
         settings.overlays.showStatus && item.status === "starved" ? "#ff0" :
         settings.overlays.showStatus && item.status === "clogged" ? "#f44" :
         item.id === selected?.id ? "#6f6" :
@@ -160,8 +170,18 @@ export function Canvas() {
       ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
 
       if (settings.overlays.showLabels) {
-        ctx.fillStyle = "#fff";
-        ctx.fillText(item.type, item.x - 18, item.y + 5);
+        ctx.fillStyle =
+      item.role === "input" ? "#229"
+    : item.role === "output" ? "#292"
+    : item.role === "logic" ? "#662"
+    : item.role === "power" ? "#733"
+    : "#fff";
+        ctx.fillText(
+      (item.role === "input" ? "⛏ " :
+       item.role === "output" ? "📦 " :
+       item.role === "logic" ? "⚙ " :
+       item.role === "power" ? "🔌 " : "") + item.type,
+      item.x - 18, item.y + 5);
         if (item.note) ctx.fillText(item.note, item.x - 18, item.y + 18);
         if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
       }
