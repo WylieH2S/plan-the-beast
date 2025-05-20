@@ -1,6 +1,8 @@
+
 import React, { useRef, useState, useEffect } from "https://esm.sh/react@18.2.0";
 import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
+import { exportPlanit, importPlanit } from "./SaveLoad.js";
 
 const gridSize = 40;
 
@@ -64,10 +66,29 @@ function Canvas() {
       onClick: handleClick,
       style: { display: "block", background: "#111", margin: "auto" }
     }),
+    React.createElement("div", {
+      style: {
+        position: "absolute", top: 10, right: 10, zIndex: 20
+      }
+    }, [
+      React.createElement("button", {
+        key: "save",
+        onClick: () => exportPlanit(items),
+        style: {
+          padding: "6px", marginRight: "10px", background: "#333", color: "#fff"
+        }
+      }, "Save Planit"),
+      React.createElement("button", {
+        key: "load",
+        onClick: () => importPlanit(setItems),
+        style: {
+          padding: "6px", background: "#333", color: "#fff"
+        }
+      }, "Load Planit")
+    ]),
     React.createElement(Tray, { onAdd: addItem }),
     React.createElement(Inspector, { selectedItem: selected, updateItem })
   );
 }
 
-window.Canvas = Canvas;
 export { Canvas };
