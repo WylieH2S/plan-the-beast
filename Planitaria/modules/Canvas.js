@@ -53,6 +53,7 @@ export function Canvas() {
   const [connectionTarget, setConnectionTarget] = useState(null);
   const [draggingId, setDraggingId] = useState(null);
   const [groupSelectBox, setGroupSelectBox] = useState(null);
+  const [hoverItem, setHoverItem] = useState(null);
   const [multiSelectIds, setMultiSelectIds] = useState([]);
   const snapEnabled = settings.snap.enabled;
   const [clipboard, setClipboard] = useState([]);
@@ -272,6 +273,11 @@ export function Canvas() {
         }
       },
       onMouseMove: (e) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / settings.zoom;
+        const y = (e.clientY - rect.top) / settings.zoom;
+        const hovered = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
+        setHoverItem(hovered || null);
         if (groupSelectBox) {
           const rect = canvasRef.current.getBoundingClientRect();
           const x = (e.clientX - rect.left) / settings.zoom;
@@ -331,6 +337,26 @@ export function Canvas() {
     React.createElement(Tray, { onAdd: addItem, gamepack }),
     React.createElement(Inspector, { selectedItem: selected, updateItem }),
     React.createElement(Minimap, { items }),
-    React.createElement(SummaryPanel, { items })
+    React.createElement(SummaryPanel, { items }),
+    hoverItem && React.createElement("div", {
+      style: {
+        position: "absolute",
+        left: hoverItem.x * settings.zoom + 20,
+        top: hoverItem.y * settings.zoom,
+        background: "#222",
+        padding: "6px",
+        color: "#fff",
+        fontSize: "12px",
+        borderRadius: "6px",
+        border: "1px solid #444",
+        pointerEvents: "none",
+        zIndex: 99
+      }
+    }, [
+      React.createElement("div", {}, `🔎 ${hoverItem.type}`),
+      React.createElement("div", {}, `Role: ${hoverItem.role}`),
+      hoverItem.power !== undefined && React.createElement("div", {}, `Power: ${hoverItem.power} MW`),
+      hoverItem.throughput !== undefined && React.createElement("div", {}, `Flow: ${hoverItem.throughput} / min`)
+    ])
   );
 }
