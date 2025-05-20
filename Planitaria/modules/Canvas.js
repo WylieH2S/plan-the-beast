@@ -42,6 +42,7 @@ function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems, undoItems, redoItems] = useHistory([]);
   const [connectionTarget, setConnectionTarget] = useState(null);
+  const [draggingId, setDraggingId] = useState(null);
   const snap = 40;
   const [history, setHistory] = useState([[]]);
   const [gamepack, setGamepack] = useState(loadGamepack("satisfactory"));
@@ -131,6 +132,23 @@ function Canvas() {
 
   return React.createElement(React.Fragment, null,
     React.createElement("canvas", {
+      onMouseDown: (e) => {
+        if (e.button !== 0) return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / settings.zoom;
+        const y = (e.clientY - rect.top) / settings.zoom;
+        const target = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
+        if (target) setDraggingId(target.id);
+      },
+      onMouseMove: (e) => {
+        if (!draggingId) return;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / settings.zoom;
+        const y = (e.clientY - rect.top) / settings.zoom;
+        const snapped = v => settings.snap.enabled ? Math.round(v / settings.snap.size) * settings.snap.size : v;
+        setItems(items.map(it => it.id === draggingId ? { ...it, x: snapped(x), y: snapped(y) } : it));
+      },
+      onMouseUp: () => setDraggingId(null),
       ref: canvasRef,
       width: 1200,
       height: 800,
