@@ -1,16 +1,27 @@
 {
-  "last_updated": "2025-05-19",
-  "changes": [],
+  "last_updated": "2025-05-20",
+  "changes": [
+    "Regenerated continuity files to reflect real module state."
+  ],
   "todo": [
-    "Fix logic integration in Canvas",
-    "Verify mount root in index.html",
-    "Restore save/load validation"
+    "Implement undo/redo system",
+    "Refactor gamepack loader",
+    "Document state transitions"
   ],
   "verified_modules": [
-    "Canvas.js",
-    "Inspector.js",
-    "LogicSim.js",
-    "SaveLoad.js",
-    "Tray.js"
+    "AIHooks.js",
+    "ConnectionVisualizer.js",
+    "Gamepack.js",
+    "Minimap.js",
+    "Settings.js",
+    "SummaryPanel.js",
+    "Toolbar.js",
+    "Tutorial.js",
+    "main.js",
+    "modules/Canvas.js",
+    "modules/Inspector.js",
+    "modules/LogicSim.js",
+    "modules/SaveLoad.js",
+    "modules/Tray.js"
   ]
 }
