@@ -50,6 +50,33 @@ export function Canvas() {
   const [groupSelectBox, setGroupSelectBox] = useState(null);
   const [multiSelectIds, setMultiSelectIds] = useState([]);
   const snapEnabled = settings.snap.enabled;
+  const [clipboard, setClipboard] = useState([]);
+  useEffect(() => {
+    const handleKey = (e) => {
+      if ((e.key === "Delete" || e.key === "Backspace") && multiSelectIds.length) {
+        setItems(items.filter(it => !multiSelectIds.includes(it.id)));
+        setMultiSelectIds([]);
+      }
+      if (e.ctrlKey && e.key === "c") {
+        const copy = items.filter(it => multiSelectIds.includes(it.id)).map(it => ({ ...it }));
+        setClipboard(copy);
+      }
+      if (e.ctrlKey && e.key === "v" && clipboard.length) {
+        const time = Date.now();
+        const pasted = clipboard.map((it, i) => ({
+          ...it,
+          id: `${time}-${i}`,
+          x: it.x + 40,
+          y: it.y + 40
+        }));
+        setItems([...items, ...pasted]);
+        setMultiSelectIds(pasted.map(p => p.id));
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [items, multiSelectIds, clipboard]);
+
   const snapSize = settings.snap.size;
 
   useEffect(() => {

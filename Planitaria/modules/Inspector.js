@@ -1,6 +1,32 @@
 import React, { useState, useEffect } from "https://esm.sh/react@18.2.0";
 
-function Inspector({ selectedItem, updateItem }) {
+export function Inspector({ selectedItem, updateItem, multi }) {
+  if (!selectedItem && (!multi || !multi.length)) return null;
+
+  if (multi && multi.length > 1) {
+    const roles = multi.map(it => it.role);
+    const types = multi.map(it => it.type);
+    return React.createElement("div", {
+      style: {
+        position: "absolute",
+        right: 10,
+        top: 10,
+        width: "260px",
+        background: "#222",
+        padding: "12px",
+        color: "#fff",
+        border: "1px solid #555",
+        borderRadius: "6px",
+        zIndex: 10
+      }
+    }, [
+      React.createElement("h4", {}, "Multi-Selection"),
+      React.createElement("div", {}, `Items: ${multi.length}`),
+      React.createElement("div", {}, `Types: ${[...new Set(types)].join(", ")}`),
+      React.createElement("div", {}, `Roles: ${[...new Set(roles)].join(", ")}`)
+    ]);
+  }
+
   const [label, setLabel] = useState("");
   const [note, setNote] = useState("");
   const [rotation, setRotation] = useState(0);
@@ -11,8 +37,6 @@ function Inspector({ selectedItem, updateItem }) {
     setNote(selectedItem.note || "");
     setRotation(selectedItem.rotation || 0);
   }, [selectedItem]);
-
-  if (!selectedItem) return null;
 
   return React.createElement("div", {
     style: {
@@ -28,10 +52,9 @@ function Inspector({ selectedItem, updateItem }) {
       zIndex: 10
     }
   }, [
-    React.createElement("h4", { key: "title" }, "Inspector"),
+    React.createElement("h4", {}, "Inspector"),
     React.createElement("label", {}, "Type:"),
     React.createElement("input", {
-      key: "type",
       value: label,
       onChange: e => setLabel(e.target.value),
       onBlur: () => updateItem({ ...selectedItem, type: label }),
@@ -39,7 +62,6 @@ function Inspector({ selectedItem, updateItem }) {
     }),
     React.createElement("label", {}, "Note:"),
     React.createElement("textarea", {
-      key: "note",
       value: note,
       onChange: e => setNote(e.target.value),
       onBlur: () => updateItem({ ...selectedItem, note }),
@@ -48,7 +70,6 @@ function Inspector({ selectedItem, updateItem }) {
     }),
     React.createElement("label", {}, "Rotation:"),
     React.createElement("input", {
-      key: "rotation",
       type: "number",
       value: rotation,
       min: 0,
@@ -72,5 +93,3 @@ function Inspector({ selectedItem, updateItem }) {
     }, selectedItem.status || "ok")
   ]);
 }
-
-export { Inspector };
