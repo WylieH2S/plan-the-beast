@@ -113,7 +113,16 @@ export function Inspector({ selectedItem, updateItem, multi }) {
       onBlur: () => updateItem({ ...selectedItem, rotation }),
       style: { width: "100%", marginBottom: "10px" }
     }),
-    React.createElement("label", {}, "Status:"),
+    
+    React.createElement("label", {}, "Throughput:"),
+    React.createElement("div", {
+      style: { marginBottom: "10px", color: "#0ff" }
+    }, selectedItem.throughput !== undefined ? selectedItem.throughput + " / min" : "—"),
+    React.createElement("label", {}, "Power Usage:"),
+    React.createElement("div", {
+      style: { marginBottom: "10px", color: "#ffa500" }
+    }, selectedItem.power !== undefined ? selectedItem.power + " MW" : "—"),
+React.createElement("label", {}, "Status:"),
     React.createElement("div", {
       style: {
         padding: "8px",

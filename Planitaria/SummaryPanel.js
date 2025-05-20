@@ -1,39 +1,32 @@
 import React from "https://esm.sh/react@18.2.0";
 
 export function SummaryPanel({ items }) {
-  const counts = { input: 0, logic: 0, output: 0, ok: 0, starved: 0, clogged: 0 };
-  let totalThroughput = 0;
+  const totalPower = items.reduce((acc, it) => acc + (it.power || 0), 0);
+  const totalThroughput = items.reduce((acc, it) => acc + (it.throughput || 0), 0);
 
-  for (const item of items) {
-    if (item.role) counts[item.role] += 1;
-    if (item.status) counts[item.status] += 1;
-    if (typeof item.throughput === "number") totalThroughput += item.throughput;
-  }
-
-  const avgThroughput = items.length > 0 ? Math.round(totalThroughput / items.length) : 0;
+  const powerColor = totalPower < 0 ? "#f44" : totalPower === 0 ? "#aaa" : "#4f4";
 
   return React.createElement("div", {
     style: {
       position: "absolute",
       bottom: 10,
-      right: 10,
-      width: "200px",
+      left: 10,
+      padding: "10px",
       background: "#222",
       color: "#fff",
-      border: "1px solid #444",
-      padding: "10px",
-      zIndex: 20,
-      fontSize: "13px"
+      borderRadius: "6px",
+      border: "1px solid #555",
+      fontSize: "14px",
+      zIndex: 10
     }
   }, [
-    React.createElement("div", {}, `Inputs: ${counts.input}`),
-    React.createElement("div", {}, `Logic: ${counts.logic}`),
-    React.createElement("div", {}, `Outputs: ${counts.output}`),
-    React.createElement("hr", { style: { margin: "8px 0" } }),
-    React.createElement("div", {}, `OK: ${counts.ok}`),
-    React.createElement("div", {}, `Starved: ${counts.starved}`),
-    React.createElement("div", {}, `Clogged: ${counts.clogged}`),
-    React.createElement("hr", { style: { margin: "8px 0" } }),
-    React.createElement("div", {}, `Avg Throughput: ${avgThroughput}%`)
+    React.createElement("div", {
+      key: "power",
+      style: { color: powerColor, marginBottom: "6px" }
+    }, `Net Power: ${totalPower} MW`),
+    React.createElement("div", {
+      key: "throughput",
+      style: { color: "#0cf" }
+    }, `Throughput: ${totalThroughput} / min`)
   ]);
 }
