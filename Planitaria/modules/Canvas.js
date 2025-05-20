@@ -38,6 +38,8 @@ function drawGrid(ctx, width, height, settings) {
   }
 }
 
+import { getCurrentStep, nextTutorialStep, onTutorialChange } from "./Tutorial.js";
+
 export function Canvas() {
   const canvasRef = useRef(null);
   const [items, setItems, undoItems, redoItems] = useHistory([]);
@@ -51,11 +53,13 @@ export function Canvas() {
   const [hoverItem, setHoverItem] = useState(null);
   const [multiSelectIds, setMultiSelectIds] = useState([]);
   const [clipboard, setClipboard] = useState([]);
+  const [tutorialStep, setTutorialStep] = useState(null);
 
   const snapSize = settings.snap.size;
   const snapEnabled = settings.snap.enabled;
 
   useEffect(() => {
+    onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
     };
@@ -119,6 +123,7 @@ export function Canvas() {
   }, [items, multiSelectIds]);
 
   useEffect(() => {
+    onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
     };
@@ -160,6 +165,7 @@ export function Canvas() {
   }, [items, multiSelectIds, clipboard]);
 
   useEffect(() => {
+    onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
     };
@@ -182,6 +188,7 @@ export function Canvas() {
   }, [items]);
 
   useEffect(() => {
+    onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
     };
@@ -298,6 +305,34 @@ export function Canvas() {
   }
 
   return React.createElement(React.Fragment, null,
+    tutorialStep && React.createElement("div", {
+      style: {
+        position: "absolute",
+        bottom: 20,
+        left: 20,
+        background: "#222",
+        border: "1px solid #555",
+        padding: "12px",
+        color: "#fff",
+        borderRadius: "6px",
+        maxWidth: "300px",
+        zIndex: 100
+      }
+    }, [
+      React.createElement("div", { style: { marginBottom: "8px" } }, tutorialStep.text),
+      React.createElement("button", {
+        onClick: () => nextTutorialStep(),
+        style: {
+          padding: "6px 12px",
+          background: "#444",
+          border: "none",
+          borderRadius: "4px",
+          color: "#fff",
+          cursor: "pointer"
+        }
+      }, "Next")
+    ]),
+
     React.createElement("div", {
       style: {
         position: "absolute",
