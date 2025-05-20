@@ -1,0 +1,16 @@
+{
+  "version": "1.0-functional",
+  "features": [
+    "Flow simulation with alert tags",
+    "Blueprint import/export",
+    "Toolbar fit view and filters",
+    "Summary panel live stats",
+    "Planitae metadata and inspector sync"
+  ],
+  "next": [
+    "UI polish",
+    "icon overlays",
+    "chloe tutorial routing",
+    "public build prep"
+  ]
+}
