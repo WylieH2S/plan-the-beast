@@ -19,15 +19,110 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       zIndex: 30
     }
   }, [
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
+      }
+    }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
+      }
+    }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
+      }
+    }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
     React.createElement("button", { onClick: onZoomOut }, "−"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
+      }
+    }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
+      }
+    }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
+      }
+    }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
     React.createElement("button", { onClick: onReset }, "⟳"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
+      }
+    }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
+      }
+    }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
+      }
+    }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
     React.createElement("button", { onClick: onZoomIn }, "+"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
+      }
+    }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
+      }
+    }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
+      }
+    }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
     React.createElement("button", {
       onClick: () => {
         const newState = { ...settings.overlays, showConnections: !settings.overlays.showConnections };
         setSettings({ ...settings, overlays: newState });
       }
     }, settings.overlays.showConnections ? "Hide Lines" : "Show Lines"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
+      }
+    }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
+      }
+    }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => {
+        const conn = settings.overlays.connectionTypes;
+        setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
+      }
+    }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
     React.createElement("button", {
       onClick: () => setSettings({ ...settings, snap: { ...settings.snap, enabled: !settings.snap.enabled } })
     }, settings.snap.enabled ? "Snap ✓" : "Snap ✗"),
