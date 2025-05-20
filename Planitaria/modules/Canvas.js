@@ -1,8 +1,8 @@
-
 import React, { useRef, useState, useEffect } from "https://esm.sh/react@18.2.0";
 import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
+import { simulateStatuses } from "./LogicSim.js";
 
 const gridSize = 40;
 
@@ -34,12 +34,24 @@ function Canvas() {
     const ctx = canvas.getContext("2d");
     drawGrid(ctx, canvas.width, canvas.height);
     for (const item of items) {
-      ctx.fillStyle = item.id === selected?.id ? "#6f6" : "#888";
+      // Colored overlay logic
+      if (item.status === "starved") ctx.fillStyle = "#ff0";
+      else if (item.status === "clogged") ctx.fillStyle = "#f44";
+      else ctx.fillStyle = item.id === selected?.id ? "#6f6" : "#888";
+
       ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
       ctx.fillStyle = "#fff";
       ctx.fillText(item.type, item.x - 18, item.y + 5);
     }
   }, [items, selected]);
+
+  // Trigger logic sim every 5s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      simulateStatuses(items, setItems);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [items]);
 
   function handleClick(e) {
     const rect = canvasRef.current.getBoundingClientRect();
@@ -51,7 +63,7 @@ function Canvas() {
 
   function addItem(type, role) {
     const id = Date.now().toString();
-    setItems([...items, { id, type, role, x: 200, y: 200, rotation: 0 }]);
+    setItems([...items, { id, type, role, x: 200, y: 200, rotation: 0, status: "ok" }]);
   }
 
   function updateItem(newProps) {
