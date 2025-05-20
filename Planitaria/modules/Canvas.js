@@ -3,6 +3,7 @@ import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
+import { calculateConnections } from "../ConnectionVisualizer.js";
 
 const gridSize = 40;
 
