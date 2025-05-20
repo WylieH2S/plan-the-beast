@@ -4,5 +4,9 @@ export const defaultSettings = {
     showLabels: true,
     showStatus: true
   },
-  zoom: 1.0
+  zoom: 1.0,
+  snap: {
+    enabled: true,
+    size: 40
+  }
 };

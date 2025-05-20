@@ -3,7 +3,6 @@ import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
-import { calculateConnections } from "../ConnectionVisualizer.js";
 import { defaultSettings } from "../Settings.js";
 import { Minimap } from "../Minimap.js";
 import { Toolbar } from "../Toolbar.js";
@@ -11,12 +10,19 @@ import { SummaryPanel } from "../SummaryPanel.js";
 import { addConnection, getConnections } from "../ConnectionVisualizer.js";
 import { loadGamepack } from "../Gamepack.js";
 import { useHistory } from "../useHistory.js";
-import { loadGamepack } from "../Gamepack.js";
 
 const gridSize = 40;
 
-function drawGrid(ctx, width, height) {
+function drawGrid(ctx, width, height, settings) {
   ctx.clearRect(0, 0, width, height);
+  if (settings.snap.enabled) {
+    ctx.fillStyle = '#222';
+    for (let x = 0; x < width; x += settings.snap.size) {
+      for (let y = 0; y < height; y += settings.snap.size) {
+        ctx.fillRect(x - 1, y - 1, 2, 2);
+      }
+    }
+  }
   ctx.strokeStyle = "#333";
   for (let x = 0; x < width; x += gridSize) {
     ctx.beginPath();
@@ -49,7 +55,7 @@ function Canvas() {
     ctx.save();
     ctx.scale(settings.zoom, settings.zoom);
 
-    drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom);
+    drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom, settings);
 
     if (settings.overlays.showConnections) {
       const connections = getConnections();

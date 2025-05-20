@@ -1,6 +1,13 @@
 import React from "https://esm.sh/react@18.2.0";
 
 export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, onGamepackChange }) {
+  const updateSnapSize = (e) => {
+    const size = parseInt(e.target.value);
+    if (!isNaN(size)) {
+      setSettings({ ...settings, snap: { ...settings.snap, size } });
+    }
+  };
+
   return React.createElement("div", {
     style: {
       position: "absolute",
@@ -21,6 +28,18 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
         setSettings({ ...settings, overlays: newState });
       }
     }, settings.overlays.showConnections ? "Hide Lines" : "Show Lines"),
+    React.createElement("button", {
+      onClick: () => setSettings({ ...settings, snap: { ...settings.snap, enabled: !settings.snap.enabled } })
+    }, settings.snap.enabled ? "Snap ✓" : "Snap ✗"),
+    React.createElement("input", {
+      type: "number",
+      value: settings.snap.size,
+      min: 10,
+      max: 100,
+      step: 10,
+      onChange: updateSnapSize,
+      style: { width: "60px" }
+    }),
     React.createElement("select", {
       onChange: e => onGamepackChange(e.target.value),
       defaultValue: "satisfactory"
