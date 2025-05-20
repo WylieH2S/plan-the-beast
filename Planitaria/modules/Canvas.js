@@ -51,6 +51,53 @@ export function Canvas() {
   const [multiSelectIds, setMultiSelectIds] = useState([]);
   const snapEnabled = settings.snap.enabled;
   const [clipboard, setClipboard] = useState([]);
+  
+  useEffect(() => {
+    const exportHandler = () => {
+      const selectedItems = items.filter(it => multiSelectIds.includes(it.id));
+      if (!selectedItems.length) return alert("Select items to export as blueprint.");
+      import("../modules/SaveLoad.js").then(mod => mod.exportBlueprint(selectedItems));
+    };
+    const importHandler = () => {
+      import("../modules/SaveLoad.js").then(mod => mod.importBlueprint(newItems => {
+        const offset = 40;
+        const time = Date.now();
+        const clone = newItems.map((it, i) => ({
+          ...it,
+          id: `${time}-${i}`,
+          x: it.x + offset,
+          y: it.y + offset
+        }));
+        setItems([...items, ...clone]);
+        setMultiSelectIds(clone.map(i => i.id));
+      }));
+    };
+    const fitHandler = () => {
+      const canvas = canvasRef.current;
+      if (!canvas || items.length === 0) return;
+      const xs = items.map(i => i.x);
+      const ys = items.map(i => i.y);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const pad = 100;
+      const width = canvas.width;
+      const height = canvas.height;
+      const scaleX = width / (maxX - minX + pad);
+      const scaleY = height / (maxY - minY + pad);
+      const zoom = Math.min(scaleX, scaleY, 2);
+      setSettings({ ...settings, zoom });
+    };
+
+    window.addEventListener("exportBlueprint", exportHandler);
+    window.addEventListener("importBlueprint", importHandler);
+    window.addEventListener("fitCanvas", fitHandler);
+    return () => {
+      window.removeEventListener("exportBlueprint", exportHandler);
+      window.removeEventListener("importBlueprint", importHandler);
+      window.removeEventListener("fitCanvas", fitHandler);
+    };
+  }, [items, multiSelectIds]);
+
   useEffect(() => {
     const handleKey = (e) => {
       if ((e.key === "Delete" || e.key === "Backspace") && multiSelectIds.length) {

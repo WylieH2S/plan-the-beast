@@ -20,11 +20,37 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
     }
   }, [
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
       }
     }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
@@ -32,19 +58,71 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
       }
     }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
 
     React.createElement("button", { onClick: onZoomOut }, "−"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
       }
     }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
@@ -52,25 +130,90 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
       }
     }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
 
     React.createElement("button", { onClick: onReset }, "⟳"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
       }
     }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
       }
     }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
@@ -78,7 +221,33 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
 
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", { onClick: onZoomIn }, "+"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
@@ -86,17 +255,56 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, power: !conn.power } } });
       }
     }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
       }
     }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
 
     React.createElement("button", {
       onClick: () => {
@@ -105,11 +313,37 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, settings.overlays.showConnections ? "Hide Lines" : "Show Lines"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, belt: !conn.belt } } });
       }
     }, (settings.overlays.connectionTypes.belt ? "✓" : "✗") + " Belt"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
     React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
@@ -117,11 +351,37 @@ export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, o
       }
     }, (settings.overlays.connectionTypes.power ? "✓" : "✗") + " Power"),
     React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
+
+    React.createElement("button", {
       onClick: () => {
         const conn = settings.overlays.connectionTypes;
         setSettings({ ...settings, overlays: { ...settings.overlays, connectionTypes: { ...conn, pipe: !conn.pipe } } });
       }
     }, (settings.overlays.connectionTypes.pipe ? "✓" : "✗") + " Pipe"),
+
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("fitCanvas")),
+      style: { background: "#333", color: "#fff" }
+    }, "Fit View"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("exportBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Export Blueprint"),
+    React.createElement("button", {
+      onClick: () => window.dispatchEvent(new CustomEvent("importBlueprint")),
+      style: { background: "#333", color: "#fff" }
+    }, "Import Blueprint"),
 
     React.createElement("button", {
       onClick: () => setSettings({ ...settings, snap: { ...settings.snap, enabled: !settings.snap.enabled } })
