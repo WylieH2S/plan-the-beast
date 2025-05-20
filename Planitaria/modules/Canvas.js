@@ -1,103 +1,70 @@
-import React, { useState, useEffect } from "https://esm.sh/react@18.2.0?bundle";
-import { simulate } from "./LogicSim.js";
-import { savePlanit, loadPlanit } from "./SaveLoad.js";
+
+import React, { useState, useRef, useEffect } from "https://esm.sh/react@18.2.0?bundle";
 import { Inspector } from "./Inspector.js";
+import { Tray } from "./Tray.js";
 
 const gridSize = 40;
-const defaultItems = [
-  { id: "1", type: "Miner", role: "input", x: 100, y: 100, rotation: 0 },
-  { id: "2", type: "Smelter", role: "logic", x: 250, y: 100, rotation: 0 },
-  { id: "3", type: "Constructor", role: "output", x: 400, y: 100, rotation: 0 }
-];
-const defaultConnections = [
-  { from: "1", to: "2" },
-  { from: "2", to: "3" }
-];
+
+function drawGrid(ctx, width, height) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.strokeStyle = "#333";
+  for (let x = 0; x < width; x += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  }
+  for (let y = 0; y < height; y += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  }
+}
 
 export function Canvas() {
+  const canvasRef = useRef(null);
   const [items, setItems] = useState([]);
-  const [connections, setConnections] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [simState, setSimState] = useState({});
 
   useEffect(() => {
-    const saved = loadPlanit("planit-current");
-    if (saved) {
-      setItems(saved.items);
-      setConnections(saved.connections);
-    } else {
-      setItems(defaultItems);
-      setConnections(defaultConnections);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    drawGrid(ctx, canvas.width, canvas.height);
+    for (const item of items) {
+      ctx.fillStyle = item.id === selected?.id ? "#6f6" : "#888";
+      ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
+      ctx.fillStyle = "#fff";
+      ctx.fillText(item.type, item.x - 18, item.y + 5);
     }
-  }, []);
+  }, [items, selected]);
 
-  useEffect(() => {
-    const result = simulate(items, connections);
-    setSimState(result);
-    savePlanit("planit-current", items, connections);
-  }, [items, connections]);
-
-  function getCenter(item) {
-    return { x: item.x + 40, y: item.y + 20 };
+  function handleClick(e) {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const clicked = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
+    setSelected(clicked || null);
   }
 
-  function updateItem(updated) {
-    const next = items.map(i => i.id === updated.id ? updated : i);
-    setItems(next);
-    setSelected(updated);
+  function addItem(type, role) {
+    const id = Date.now().toString();
+    setItems([...items, { id, type, role, x: 200, y: 200, rotation: 0 }]);
   }
 
-  return React.createElement(
-    React.Fragment,
-    null,
-    React.createElement("svg", {
-      width: "100%", height: "85vh",
-      style: { position: "absolute", pointerEvents: "none" }
-    },
-      connections.map((conn, i) => {
-        const from = items.find(i => i.id === conn.from);
-        const to = items.find(i => i.id === conn.to);
-        if (!from || !to) return null;
-        const p1 = getCenter(from);
-        const p2 = getCenter(to);
-        return React.createElement("line", {
-          key: i,
-          x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y,
-          stroke: "cyan", strokeWidth: 2
-        });
-      })
-    ),
-    React.createElement("div", {
-      style: {
-        width: "100%",
-        height: "85vh",
-        backgroundImage: "linear-gradient(#444 1px, transparent 1px), linear-gradient(90deg, #444 1px, transparent 1px)",
-        backgroundSize: gridSize + "px " + gridSize + "px",
-        position: "relative"
-      }
-    },
-      items.map((item) => {
-        const satisfied = simState[item.id]?.satisfied;
-        return React.createElement("div", {
-          key: item.id,
-          title: item.type,
-          onClick: () => setSelected(item),
-          style: {
-            position: "absolute",
-            left: item.x,
-            top: item.y,
-            background: satisfied ? "#9f9" : "#f99",
-            padding: "6px 10px",
-            borderRadius: "4px",
-            fontWeight: "bold",
-            color: "#000",
-            transform: `rotate(${item.rotation}deg)`,
-            cursor: "pointer",
-            boxShadow: "0 0 4px cyan"
-          }
-        }, item.type);
-      })
-    ),
+  function updateItem(newProps) {
+    setItems(items.map(it => it.id === selected.id ? { ...it, ...newProps } : it));
+  }
+
+  return React.createElement(React.Fragment, null,
+    React.createElement("canvas", {
+      ref: canvasRef,
+      width: 1200,
+      height: 800,
+      onClick: handleClick,
+      style: { display: "block", background: "#111", margin: "auto" }
+    }),
+    React.createElement(Tray, { onAdd: addItem }),
     React.createElement(Inspector, { selectedItem: selected, updateItem })
   );
 }
