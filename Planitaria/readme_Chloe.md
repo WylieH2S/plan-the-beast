@@ -30,4 +30,11 @@ This file contains embedded memory and reconstruction instructions for Chloe to 
 
 ## ⛔ Deployment not active
 This build is ready for GitHub but should not be publicly deployed until manually confirmed by user.
-
+## 🧠 Sprint 7 + RC2 Update
+- Canvas soft edge bounds and snapping finalized
+- Planit Manager: notes, tooltips, and persistent settings polish
+- LogicSim overlays now support flow visualization
+- Blueprint import/export fully stabilized
+- Tutorial system finalized with restart/skip controls
+- All continuity files validated against project state
+- RC2 confirmed stable and GitHub-ready

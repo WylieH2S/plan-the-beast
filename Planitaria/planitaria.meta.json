@@ -1,7 +1,7 @@
 {
   "name": "Planitaria",
-  "version": "1.0-RC1",
-  "build_id": "Planitaria_1.0-RC1",
+  "version": "1.0-RC2",
+  "build_id": "Planitaria_1.0-RC2",
   "description": "Fully offline-capable blueprinting and planning tool.",
   "supported_games": [
     "satisfactory",
@@ -12,5 +12,7 @@
   "tutorial_enabled": true,
   "save_format": ".planit",
   "hash": "sha256-precheck",
-  "author": "WylieH2S"
+  "author": "WylieH2S",
+  "sprint": "7",
+  "status": "ready-for-final-review"
 }
