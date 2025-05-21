@@ -3,13 +3,13 @@ import { Tray } from "./Tray.js";
 import { Inspector } from "./Inspector.js";
 import { exportPlanit, importPlanit } from "./SaveLoad.js";
 import { simulateStatuses } from "./LogicSim.js";
-import { getConnections, addConnection, removeConnectionByCoords, loadConnections, cycleConnectionType } from "../ConnectionVisualizer.js";
-import { defaultSettings } from "../Settings.js";
-import { Minimap } from "../Minimap.js";
-import { Toolbar } from "../Toolbar.js";
-import { SummaryPanel } from "../SummaryPanel.js";
-import { loadGamepack } from "../Gamepack.js";
-import { useHistory } from "../useHistory.js";
+import { getConnections, addConnection, removeConnectionByCoords, loadConnections, cycleConnectionType } from "./ConnectionVisualizer.js";
+import { defaultSettings } from "./Settings.js";
+import { Minimap } from "./Minimap.js";
+import { Toolbar } from "./Toolbar.js";
+import { SummaryPanel } from "./SummaryPanel.js";
+import { loadGamepack } from "./Gamepack.js";
+import { useHistory } from "./useHistory.js";
 
 const gridSize = 40;
 
@@ -114,10 +114,10 @@ export function Canvas() {
     const exportHandler = () => {
       const selectedItems = items.filter(it => multiSelectIds.includes(it.id));
       if (!selectedItems.length) return alert("Select items to export as blueprint.");
-      import("../modules/SaveLoad.js").then(mod => mod.exportBlueprint(selectedItems));
+      import("./SaveLoad.js").then(mod => mod.exportBlueprint(selectedItems));
     };
     const importHandler = () => {
-      import("../modules/SaveLoad.js").then(mod => mod.importBlueprint(newItems => {
+      import("./SaveLoad.js").then(mod => mod.importBlueprint(newItems => {
         const offset = 40;
         const time = Date.now();
         const clone = newItems.map((it, i) => ({
@@ -607,10 +607,6 @@ export function Canvas() {
             console.error(err);
             setErrorMessage("❌ Failed to load Planit. File may be corrupted or invalid.");
           }
-        }),
-          setItems(newItems);
-          setHistory(newHistory);
-          loadConnections(conns, newItems);
         }),
         style: { padding: "6px", background: "#333", color: "#fff" }
       }, "Load")
