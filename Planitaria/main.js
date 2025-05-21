@@ -1,6 +1,5 @@
-import React from "./libs/react.js";
-import ReactDOM from "./libs/react-dom.js";
-import { Canvas } from "./modules/Canvas.js";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(React.createElement(Canvas));
+window.addEventListener("DOMContentLoaded", async () => {
+  const { Canvas } = await import("./modules/Canvas.js");
+  const root = window.ReactDOM.createRoot(document.getElementById("root"));
+  root.render(window.React.createElement(Canvas));
+});

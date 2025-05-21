@@ -72,7 +72,81 @@ export function Canvas() {
   const [tutorialStep, setTutorialStep] = useState(null);
 
   const snapSize = settings.snap.size;
-  const snapEnabled = settings.snap.enabled;
+  
+  useEffect(() => {
+    const canvas = canvasRef.current;
+   if (!canvas) return;
+     if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.save();
+    ctx.scale(settings.zoom, settings.zoom);
+    drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom, settings);
+
+    const connections = getConnections();
+    for (const conn of connections) {
+      const { a, b, type } = conn;
+      if (!settings.overlays.connectionTypes?.[type]) continue;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = type === 'power' ? '#ffa500' : type === 'pipe' ? '#0ff' : '#3cf';
+      ctx.setLineDash(type === 'pipe' ? [6, 3] : type === 'power' ? [2, 2] : []);
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.lineWidth = 1;
+
+    for (const item of items) {
+      ctx.fillStyle =
+        item.role === "input" ? "#229"
+        : item.role === "output" ? "#292"
+        : item.role === "logic" ? "#662"
+        : item.role === "power" ? "#733"
+        : settings.overlays.showStatus && item.status === "starved" ? "#ff0"
+        : settings.overlays.showStatus && item.status === "clogged" ? "#f44"
+        : item.id === selected?.id ? "#6f6"
+        : multiSelectIds.includes(item.id) ? "#0af"
+        : "#888";
+
+      ctx.fillRect(item.x - 20, item.y - 20, 40, 40);
+
+      if (settings.overlays.showLabels) {
+        ctx.fillStyle = "#fff";
+        ctx.fillText(
+          (item.role === "input" ? "⛏ " :
+          item.role === "output" ? "📦 " :
+          item.role === "logic" ? "⚙ " :
+          item.role === "power" ? "🔌 " : "") + item.type,
+          item.x - 18, item.y + 5
+        );
+        if (item.note) ctx.fillText(item.note, item.x - 18, item.y + 18);
+        if (item.throughput !== undefined) ctx.fillText(item.throughput + "%", item.x - 18, item.y + 32);
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(item.x, item.y);
+      const angle = (item.rotation || 0) * Math.PI / 180;
+      const len = 15;
+      ctx.lineTo(item.x + len * Math.cos(angle), item.y + len * Math.sin(angle));
+      ctx.strokeStyle = "#0af";
+      ctx.stroke();
+    }
+
+    if (groupSelectBox) {
+      const { x1, y1, x2, y2 } = groupSelectBox;
+      ctx.setLineDash([4, 2]);
+      ctx.strokeStyle = "#0af";
+      ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+      ctx.setLineDash([]);
+    }
+
+    ctx.restore();
+  }, [items, selected, settings, multiSelectIds, groupSelectBox]);
+
+const snapEnabled = settings.snap.enabled;
 
   useEffect(() => {
     const centerHandler = e => {
@@ -116,6 +190,8 @@ export function Canvas() {
     window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
+ if (!canvas) return;
+     if (!canvas) return;
       canvas.toBlob(blob => {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -146,6 +222,8 @@ export function Canvas() {
     };
     const fitHandler = () => {
       const canvas = canvasRef.current;
+ if (!canvas) return;
+     if (!canvas) return;
       if (!canvas || items.length === 0) return;
       const xs = items.map(i => i.x);
       const ys = items.map(i => i.y);
@@ -217,6 +295,8 @@ export function Canvas() {
     window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
+ if (!canvas) return;
+     if (!canvas) return;
       canvas.toBlob(blob => {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -293,6 +373,8 @@ export function Canvas() {
     window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
+ if (!canvas) return;
+     if (!canvas) return;
       canvas.toBlob(blob => {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -350,6 +432,8 @@ export function Canvas() {
     window.addEventListener("startTutorial", tutorialStartHandler);
     const shotHandler = () => {
       const canvas = canvasRef.current;
+ if (!canvas) return;
+     if (!canvas) return;
       canvas.toBlob(blob => {
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -360,7 +444,8 @@ export function Canvas() {
     window.addEventListener("exportScreenshot", shotHandler);
 
     const canvas = canvasRef.current;
-    if (!canvas) return;
+   if (!canvas) return;
+     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     ctx.save();
     ctx.scale(settings.zoom, settings.zoom);
