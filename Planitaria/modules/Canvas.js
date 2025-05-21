@@ -1,3 +1,9 @@
+// [Canvas.js UI Vision Sprint] Layout shell, theme polish, spacing, fade-in, branding prep
+// [Canvas.js Polish Sprint P4] Branding, version overlay, canvas fade, QA polish
+// [Canvas.js Polish Sprint P3] Navigator box, zoom presets, export feedback, animations
+// [Canvas.js Polish Sprint P3] Navigator box, zoom presets, transitions, save/load polish
+// [Canvas.js Polish Sprint P2] Cursor UX, button feedback, HUD toggles, context polish
+// [Canvas.js Polish Sprint P1] UI structure, theme, font, safe zones, blur
 // [Canvas.js Planitaria 1.0-RC1] Final polish and tutorial complete
 // [Canvas.js Sprint 7] Overlay toggles, blueprint mode, coordinate scale improvements
 // [Canvas.js Sprint 6] Visual throughput, connection states, Planit metadata

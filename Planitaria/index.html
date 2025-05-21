@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="./">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
     <title>Planitaria</title>
-    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body style="background: #111; color: white; margin: 0">
-    <div id="root">Loading Planitaria...</div>
-    <script type="module" src="./modules/main.js"></script>
+  <body>
+    <div class="app-shell">
+      <div class="topbar">
+        <div><strong>Planitaria</strong> v1.0</div>
+        <div>
+          <button onclick="dispatchEvent(new CustomEvent('exportScreenshot'))">📷 Screenshot</button>
+        </div>
+      </div>
+      <div class="tray-panel" id="tray-root"></div>
+      <div class="canvas-zone">
+        <div id="root">Loading Planitaria...</div>
+      </div>
+      <div class="footer">
+        &copy; 2025 Planitaria Labs
+      </div>
+    </div>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

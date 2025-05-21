@@ -1,0 +1,61 @@
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at center, #1a1a1a, #111);
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "topbar topbar"
+    "tray canvas"
+    "footer footer";
+  height: 100vh;
+  width: 100vw;
+}
+
+.topbar {
+  grid-area: topbar;
+  background: #222;
+  padding: 10px 20px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tray-panel {
+  grid-area: tray;
+  background: #1c1c1c;
+  border-right: 1px solid #333;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.canvas-zone {
+  grid-area: canvas;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+}
+
+canvas {
+  box-shadow: 0 0 10px #000;
+  border-radius: 4px;
+}
+
+.footer {
+  grid-area: footer;
+  background: #1a1a1a;
+  border-top: 1px solid #333;
+  padding: 8px 20px;
+  text-align: right;
+  font-size: 12px;
+  color: #666;
+}
