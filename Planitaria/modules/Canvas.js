@@ -1,3 +1,8 @@
+// [Canvas.js Sprint 7] Overlay toggles, blueprint mode, coordinate scale improvements
+// [Canvas.js Sprint 6] Visual throughput, connection states, Planit metadata
+// [Canvas.js Sprint 5] Soft bounds, label editing, drag+drop load, UX polish
+// [Canvas.js Sprint 4] Panning, feedback, persistent zoom/snap
+// [Canvas.js Sprint 3] Debug overlay, snap toggle, tutorial progress dots
 // [Canvas.js Sprint 2] Flow overlay, grid polish, canvas scale marker
 // [Canvas.js] Enhanced with right-click, tutorial overlay, and debug
 import React, { useRef, useState, useEffect } from "https://esm.sh/react@18.2.0";
