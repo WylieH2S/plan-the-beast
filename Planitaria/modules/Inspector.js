@@ -1,3 +1,4 @@
+// [Inspector.js] Now includes rotation buttons and live label update
 import React, { useState, useEffect } from "https://esm.sh/react@18.2.0";
 
 export function Inspector({ selectedItem, updateItem, multi }) {

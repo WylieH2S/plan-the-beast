@@ -1,3 +1,4 @@
+// [Tutorial.js] Adds skip/close controls and current step state
 import React from "https://esm.sh/react@18.2.0";
 
 let step = 0;

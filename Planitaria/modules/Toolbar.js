@@ -1,3 +1,4 @@
+// [Toolbar.js] Polished gamepack dropdown and zoom logic
 import React from "https://esm.sh/react@18.2.0";
 
 export function Toolbar({ onZoomIn, onZoomOut, onReset, settings, setSettings, onGamepackChange }) {

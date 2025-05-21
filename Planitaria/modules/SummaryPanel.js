@@ -1,3 +1,4 @@
+// [SummaryPanel.js] Displays total power and throughput
 import React from "https://esm.sh/react@18.2.0";
 
 export function SummaryPanel({ items }) {
