@@ -1,3 +1,4 @@
+// [Canvas.js Planitaria 1.0-RC1] Final polish and tutorial complete
 // [Canvas.js Sprint 7] Overlay toggles, blueprint mode, coordinate scale improvements
 // [Canvas.js Sprint 6] Visual throughput, connection states, Planit metadata
 // [Canvas.js Sprint 5] Soft bounds, label editing, drag+drop load, UX polish
