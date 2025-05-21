@@ -1,4 +1,4 @@
-import { serializeConnections, loadConnections } from "../ConnectionVisualizer.js";
+import { serializeConnections, loadConnections } from "./ConnectionVisualizer.js";
 
 export function exportPlanit(items, history) {
   const data = JSON.stringify({ items, history, connections: serializeConnections() }, null, 2);

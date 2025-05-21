@@ -1,4 +1,4 @@
-import { getConnections } from "../ConnectionVisualizer.js";
+import { getConnections } from "./ConnectionVisualizer.js";
 
 export function simulateStatuses(items, setItems) {
   const connections = getConnections();
