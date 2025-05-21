@@ -34,5 +34,11 @@
     "modules/LogicSim.js": "b62e67836c8885010a968197200d6794cb564c0138415df918d47628182199c0",
     "modules/Canvas.js": "c84546f69ddcda64e10f482dafba036f0bc6c2873327afb050a0c484aeb2de7e",
     "modules/SaveLoad.js": "be4f7f86425f728b9385408e6108155215c8446c044797c0279f276263ab2b1f"
-  }
+  },
+  "lastBuild": "2025-05-20T23:58:01.955732Z",
+  "featureFlags": [
+    "undoRedoHotkeys",
+    "minimapJump",
+    "errorBanner"
+  ]
 }

@@ -53,12 +53,48 @@ export function Canvas() {
   const [hoverItem, setHoverItem] = useState(null);
   const [multiSelectIds, setMultiSelectIds] = useState([]);
   const [clipboard, setClipboard] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [ghost, setGhost] = useState(null);
   const [tutorialStep, setTutorialStep] = useState(null);
 
   const snapSize = settings.snap.size;
   const snapEnabled = settings.snap.enabled;
 
   useEffect(() => {
+    const centerHandler = e => {
+      const { x, y } = e.detail;
+      const cx = canvasRef.current.width / 2 / settings.zoom;
+      const cy = canvasRef.current.height / 2 / settings.zoom;
+      const dx = x - cx;
+      const dy = y - cy;
+      setItems(items.map(it => ({ ...it, x: it.x - dx, y: it.y - dy })));
+    };
+    window.addEventListener("centerCanvas", centerHandler);
+    const ghostHandler = e => setGhost(e.detail);
+    window.addEventListener("setGhost", ghostHandler);
+    const keyHandler = e => {
+      if (!selected) return;
+      const offset = 5;
+      if (e.key === "ArrowUp") updateItem({ y: selected.y - offset });
+      if (e.key === "ArrowDown") updateItem({ y: selected.y + offset });
+      if (e.key === "ArrowLeft") updateItem({ x: selected.x - offset });
+      if (e.key === "ArrowRight") updateItem({ x: selected.x + offset });
+    };
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key === "z") undoItems();
+      if (e.ctrlKey && (e.key === "y" || e.key === "Z")) redoItems();
+    });
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") setGhost(null);
+    });
+    window.addEventListener("contextmenu", e => {
+      if (ghost) {
+        e.preventDefault();
+        setGhost(null);
+      }
+    });
+
     onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
@@ -114,6 +150,9 @@ export function Canvas() {
     window.addEventListener("importBlueprint", importHandler);
     window.addEventListener("fitCanvas", fitHandler);
     return () => {
+      window.removeEventListener("centerCanvas", centerHandler);
+      window.removeEventListener("setGhost", ghostHandler);
+      window.removeEventListener("keydown", keyHandler);
       window.removeEventListener("startTutorial", tutorialStartHandler);
       window.removeEventListener("exportScreenshot", shotHandler);
       window.removeEventListener("exportBlueprint", exportHandler);
@@ -123,6 +162,40 @@ export function Canvas() {
   }, [items, multiSelectIds]);
 
   useEffect(() => {
+    const centerHandler = e => {
+      const { x, y } = e.detail;
+      const cx = canvasRef.current.width / 2 / settings.zoom;
+      const cy = canvasRef.current.height / 2 / settings.zoom;
+      const dx = x - cx;
+      const dy = y - cy;
+      setItems(items.map(it => ({ ...it, x: it.x - dx, y: it.y - dy })));
+    };
+    window.addEventListener("centerCanvas", centerHandler);
+    const ghostHandler = e => setGhost(e.detail);
+    window.addEventListener("setGhost", ghostHandler);
+    const keyHandler = e => {
+      if (!selected) return;
+      const offset = 5;
+      if (e.key === "ArrowUp") updateItem({ y: selected.y - offset });
+      if (e.key === "ArrowDown") updateItem({ y: selected.y + offset });
+      if (e.key === "ArrowLeft") updateItem({ x: selected.x - offset });
+      if (e.key === "ArrowRight") updateItem({ x: selected.x + offset });
+    };
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key === "z") undoItems();
+      if (e.ctrlKey && (e.key === "y" || e.key === "Z")) redoItems();
+    });
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") setGhost(null);
+    });
+    window.addEventListener("contextmenu", e => {
+      if (ghost) {
+        e.preventDefault();
+        setGhost(null);
+      }
+    });
+
     onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
@@ -165,6 +238,40 @@ export function Canvas() {
   }, [items, multiSelectIds, clipboard]);
 
   useEffect(() => {
+    const centerHandler = e => {
+      const { x, y } = e.detail;
+      const cx = canvasRef.current.width / 2 / settings.zoom;
+      const cy = canvasRef.current.height / 2 / settings.zoom;
+      const dx = x - cx;
+      const dy = y - cy;
+      setItems(items.map(it => ({ ...it, x: it.x - dx, y: it.y - dy })));
+    };
+    window.addEventListener("centerCanvas", centerHandler);
+    const ghostHandler = e => setGhost(e.detail);
+    window.addEventListener("setGhost", ghostHandler);
+    const keyHandler = e => {
+      if (!selected) return;
+      const offset = 5;
+      if (e.key === "ArrowUp") updateItem({ y: selected.y - offset });
+      if (e.key === "ArrowDown") updateItem({ y: selected.y + offset });
+      if (e.key === "ArrowLeft") updateItem({ x: selected.x - offset });
+      if (e.key === "ArrowRight") updateItem({ x: selected.x + offset });
+    };
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key === "z") undoItems();
+      if (e.ctrlKey && (e.key === "y" || e.key === "Z")) redoItems();
+    });
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") setGhost(null);
+    });
+    window.addEventListener("contextmenu", e => {
+      if (ghost) {
+        e.preventDefault();
+        setGhost(null);
+      }
+    });
+
     onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
@@ -188,6 +295,40 @@ export function Canvas() {
   }, [items]);
 
   useEffect(() => {
+    const centerHandler = e => {
+      const { x, y } = e.detail;
+      const cx = canvasRef.current.width / 2 / settings.zoom;
+      const cy = canvasRef.current.height / 2 / settings.zoom;
+      const dx = x - cx;
+      const dy = y - cy;
+      setItems(items.map(it => ({ ...it, x: it.x - dx, y: it.y - dy })));
+    };
+    window.addEventListener("centerCanvas", centerHandler);
+    const ghostHandler = e => setGhost(e.detail);
+    window.addEventListener("setGhost", ghostHandler);
+    const keyHandler = e => {
+      if (!selected) return;
+      const offset = 5;
+      if (e.key === "ArrowUp") updateItem({ y: selected.y - offset });
+      if (e.key === "ArrowDown") updateItem({ y: selected.y + offset });
+      if (e.key === "ArrowLeft") updateItem({ x: selected.x - offset });
+      if (e.key === "ArrowRight") updateItem({ x: selected.x + offset });
+    };
+    window.addEventListener("keydown", keyHandler);
+    window.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key === "z") undoItems();
+      if (e.ctrlKey && (e.key === "y" || e.key === "Z")) redoItems();
+    });
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") setGhost(null);
+    });
+    window.addEventListener("contextmenu", e => {
+      if (ghost) {
+        e.preventDefault();
+        setGhost(null);
+      }
+    });
+
     onTutorialChange(setTutorialStep);
     const tutorialStartHandler = () => {
       import("./Tutorial.js").then(mod => mod.startTutorial());
@@ -211,6 +352,11 @@ export function Canvas() {
     ctx.scale(settings.zoom, settings.zoom);
 
     drawGrid(ctx, canvas.width / settings.zoom, canvas.height / settings.zoom, settings);
+
+    // Draw origin axes
+    ctx.strokeStyle = "#444";
+    ctx.beginPath(); ctx.moveTo(0, canvas.height); ctx.lineTo(0, 0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(canvas.width, 0); ctx.stroke();
 
     const connections = getConnections();
     for (const conn of connections) {
@@ -270,6 +416,19 @@ export function Canvas() {
       ctx.setLineDash([]);
     }
 
+    if (ghost) {
+      const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
+      const rect = canvas.getBoundingClientRect();
+      const x = snapped((window.mouseX || 200) / settings.zoom);
+      const y = snapped((window.mouseY || 200) / settings.zoom);
+      ctx.globalAlpha = 0.3;
+      ctx.fillStyle = "#888";
+      ctx.fillRect(x - 20, y - 20, 40, 40);
+      ctx.fillStyle = "#fff";
+      ctx.fillText(ghost.type, x - 18, y + 5);
+      ctx.globalAlpha = 1;
+    }
+
     ctx.restore();
   }, [items, selected, settings, multiSelectIds, groupSelectBox]);
 
@@ -280,9 +439,11 @@ export function Canvas() {
     const clicked = items.find(it => Math.abs(it.x - x) < 20 && Math.abs(it.y - y) < 20);
     if (connectionTarget && clicked) {
       addConnection(connectionTarget, clicked);
+      import("./Tutorial.js").then(mod => mod.tutorialTrigger("connected"));
       setConnectionTarget(null);
     } else {
       setSelected(clicked || null);
+      if (clicked) import("./Tutorial.js").then(mod => mod.tutorialTrigger("inspected"));
       setConnectionTarget(clicked || null);
     }
   }
@@ -290,6 +451,7 @@ export function Canvas() {
   function addItem({ type, role }) {
     const id = Date.now().toString().slice(-6);
     const snapped = v => snapEnabled ? Math.round(v / snapSize) * snapSize : v;
+    import("./Tutorial.js").then(mod => mod.tutorialTrigger("placed"));
     setItems([...items, {
       id, type, role,
       x: snapped(200),
@@ -305,6 +467,19 @@ export function Canvas() {
   }
 
   return React.createElement(React.Fragment, null,
+    errorMessage && React.createElement("div", {
+      style: {
+        position: "absolute",
+        top: 10,
+        left: "50%",
+        transform: "translateX(-50%)",
+        padding: "10px 20px",
+        background: "#900",
+        color: "#fff",
+        borderRadius: "6px",
+        zIndex: 99
+      }
+    }, errorMessage),
     tutorialStep && React.createElement("div", {
       style: {
         position: "absolute",
@@ -372,6 +547,8 @@ export function Canvas() {
         }
       },
       onMouseMove: (e) => {
+        window.mouseX = e.clientX;
+        window.mouseY = e.clientY;
         const rect = canvasRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left) / settings.zoom;
         const y = (e.clientY - rect.top) / settings.zoom;
@@ -399,7 +576,7 @@ export function Canvas() {
         }
         setDraggingId(null);
       },
-      style: { display: "block", background: "#111", margin: "auto" }
+      style: { display: "block", background: "#111", margin: "auto", boxShadow: tutorialStep?.target === "canvas" ? "0 0 0 4px #0af inset" : undefined }
     }),
     React.createElement(Toolbar, {
       onZoomIn: () => setSettings({ ...settings, zoom: settings.zoom + 0.1 }),
@@ -414,12 +591,23 @@ export function Canvas() {
     }, [
       React.createElement("button", {
         key: "save",
-        onClick: () => exportPlanit(items, history),
+        onClick: () => { import("./Tutorial.js").then(mod => mod.tutorialTrigger("saved")); exportPlanit(items, history); },
         style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
       }, "Save"),
       React.createElement("button", {
         key: "load",
         onClick: () => importPlanit((newItems, newHistory, conns) => {
+          try {
+            if (!Array.isArray(newItems)) throw new Error("Invalid Planit file.");
+            setItems(newItems);
+            setHistory(newHistory);
+            loadConnections(conns, newItems);
+            setErrorMessage("");
+          } catch (err) {
+            console.error(err);
+            setErrorMessage("❌ Failed to load Planit. File may be corrupted or invalid.");
+          }
+        }),
           setItems(newItems);
           setHistory(newHistory);
           loadConnections(conns, newItems);
@@ -427,10 +615,33 @@ export function Canvas() {
         style: { padding: "6px", background: "#333", color: "#fff" }
       }, "Load")
     ]),
-    React.createElement(Tray, { onAdd: addItem, gamepack }),
-    React.createElement(Inspector, { selectedItem: selected, updateItem }),
+    React.createElement("div", {
+      style: tutorialStep?.target === "tray" ? { outline: "2px solid #0af", borderRadius: "6px" } : undefined
+    },
+    React.createElement(Tray, { onAdd: addItem, gamepack })
+  ),
+    React.createElement("div", {
+      style: tutorialStep?.target === "inspector" ? { outline: "2px solid #0af", borderRadius: "6px" } : undefined
+    },
+    React.createElement(Inspector, { selectedItem: selected, updateItem })
+  ),
     React.createElement(Minimap, { items }),
     React.createElement(SummaryPanel, { items }),
+    React.createElement("div", {
+      style: {
+        position: "absolute", bottom: 20, right: 20, zIndex: 20, background: "#222", padding: "12px", color: "#fff", border: "1px solid #555", borderRadius: "6px"
+      }
+    }, [
+      React.createElement("h4", {}, "Planit Manager"),
+      React.createElement("button", {
+        onClick: () => window.dispatchEvent(new CustomEvent("savePlanit")),
+        style: { padding: "6px", marginRight: "6px", background: "#333", color: "#fff" }
+      }, "💾 Save"),
+      React.createElement("button", {
+        onClick: () => window.dispatchEvent(new CustomEvent("loadPlanit")),
+        style: { padding: "6px", background: "#333", color: "#fff" }
+      }, "📂 Load")
+    ]),
     hoverItem && React.createElement("div", {
       style: {
         position: "absolute",
@@ -453,3 +664,5 @@ export function Canvas() {
     ])
   );
 }
+
+// PATCHED: Begin ghost, view, and tutorial triggers

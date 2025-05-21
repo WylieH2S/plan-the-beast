@@ -41,3 +41,15 @@ export function onTutorialChange(callback) {
 function notify() {
   listeners.forEach(fn => fn(getCurrentStep()));
 }
+
+
+export function tutorialTrigger(action) {
+  const map = {
+    "placed": 2,
+    "connected": 4,
+    "inspected": 5,
+    "saved": 6
+  };
+  const next = map[action];
+  if (next && steps[step].id === next - 1) nextTutorialStep();
+}
