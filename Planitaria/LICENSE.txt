@@ -1,0 +1,23 @@
+Planitaria License - Wy Edition (based on MIT)
+
+Copyright (c) 2025 Wy
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use,
+copy, modify, merge, publish, and distribute copies of the Software,
+including for commercial purposes, provided that the following conditions are met:
+
+1. Attribution
+   You must give appropriate credit to the original project and author, including a visible mention of “Built with Planitaria by Wy” with a link to the official GitHub repository wherever your derivative works are published or showcased.
+
+2. Naming and Brand
+   The name “Planitaria,” the concept of “Planitae” and “Planits,” associated logos, themes, and design styles remain the intellectual property of Wy.
+   You may not use the name “Planitaria” or related branding in a way that implies endorsement, sponsorship, or official partnership without prior permission.
+
+3. Derivative Content
+   Users are free to create and distribute their own content using Planitaria (including Planitae/Planits), and may sell or monetize that content freely, as long as the engine (Planitaria) is acknowledged as the tool used.
+
+4. Distribution
+   If you distribute Planitaria or modifications of it, you must include this license and a link back to the original repository.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND.

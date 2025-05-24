@@ -25,3 +25,7 @@ Click “Start Tutorial” in the toolbar to walk through building a Planit from
 ---
 
 © 2025 Planitaria Project — Built with 💻 and 📐
+
+
+---
+**License Notice:** This project and its code were generated with the assistance of OpenAI’s ChatGPT, but all content, concepts, and IP (including Planitaria, Planitae, and Planits) are owned by Wy.
