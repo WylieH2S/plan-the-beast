@@ -1,0 +1,144 @@
+# memory_AI.continuity
+> Project: Planitaria
+> Owner: Wy
+> Created: 2025-05-12
+> Last Updated: 2025-05-24T14:37:51.026991Z
+> Continuity Version: 2.2
+> Format: Markdown + Embedded JSON
+> Primary Use: AI continuity and full project reconstruction
+> Compatibility: AI-agnostic (usable by any future assistant)
+
+---
+
+## 🧠 PURPOSE
+
+This file is the central continuity memory for the Planitaria project. It is intended to serve as a self-contained, AI-parsable, versioned project memory. It contains:
+- Project identity and authorship
+- Full state reconstruction logic
+- Module and development status
+- Historical logs
+- Rebuild protocol and logic flags
+- Licensing references
+
+This file replaces all other memory files for AI continuity.
+
+---
+
+## 🧱 CORE METADATA
+```json
+{
+  "projectName": "Planitaria",
+  "owner": "Wy",
+  "startDate": "2025-05-12",
+  "engineVersion": "0.9-dev",
+  "planitaeSupport": true,
+  "activeGamepacks": ["Satisfactory"],
+  "saveSystem": {
+    "type": "Planits",
+    "format": "compressed+encoded",
+    "encryption": true,
+    "storage": ["local", "SD card"],
+    "includes": ["layout", "metadata", "AI instructions", "notes"]
+  },
+  "uiStyle": "dark mode, ethereal minimalism, green/blue/yellow/purple accents",
+  "entryFile": "index.html",
+  "uiModules": ["Inspector", "Toolbar", "OverlaySystem", "SettingsPanel", "SummaryPanel"]
+}
+```
+
+---
+
+## 📊 MODULE STATUS
+
+| Module                  | Status         | Notes |
+|-------------------------|----------------|-------|
+| Canvas.js               | ✅ Completed   | Grid logic, snap-to-grid active |
+| Inspector.js            | ✅ Completed   | Merged with Save/Load |
+| SaveLoad.js             | ✅ Completed   | Planits operational, encryptable |
+| Tray.js                 | 🛠️ In Progress | Stencil dynamic loading ongoing |
+| Tutorial.js             | 🛠️ In Progress | Core engine stubbed, no AI |
+| Gamepack.js             | ✅ Completed   | Satisfactory active |
+| ConnectionVisualizer.js | ⚠️ Needs Test  | Check overlay interactions |
+| Toolbar.js              | ✅ Completed   | Basic controls implemented |
+| Settings.js             | 🛠️ In Progress | Feature toggles only |
+| LogicSim.js             | 🔲 Planned     | Logic simulation system is scaffolded |
+
+---
+
+## 🧭 REBUILD PROTOCOL
+```json
+{
+  "filesRequired": [
+    "index.html", "main.js", "Canvas.js", "Inspector.js", "Tray.js",
+    "SaveLoad.js", "Gamepack.js", "Tutorial.js"
+  ],
+  "dependencies": ["React", "Zustand", "shadcn/ui"],
+  "buildInstructions": [
+    "Extract Planitaria/ folder",
+    "Launch index.html in a browser",
+    "Ensure all modules listed above are present and accessible",
+    "Planitaria will auto-load Satisfactory as the default gamepack"
+  ]
+}
+```
+
+---
+
+## ⚙️ LOGIC FLAGS
+```json
+{
+  "overlayEnabled": true,
+  "defaultZoom": 1.0,
+  "snapToGrid": true,
+  "tutorialEnabled": false,
+  "lastUsedPlanitae": "SatisfactoryDemo.planit",
+  "panelSafeZones": true,
+  "panelSnapping": true
+}
+```
+
+---
+
+## 🗓️ DEVELOPMENT LOG
+```
+[2025-05-12T14:10Z] Planitaria project initiated by Wy.
+[2025-05-15T19:23Z] Planits introduced as save/load units. Save system in progress.
+[2025-05-18T21:44Z] Inspector and SaveLoad merged. Overlay scaffolded.
+[2025-05-22T17:00Z] Custom license created. Attribution and IP locked to Wy.
+[2025-05-24T14:20Z] Full continuity system created using AI-friendly structure.
+[2025-05-24T15:40Z] `memory_AI.continuity` format replaces `memory_Chloe.chloei` for public builds.
+```
+
+---
+
+## 🔐 LICENSE & ATTRIBUTION
+
+Planitaria, Planits, Planitae, and all conceptual and structural components are © 2025 Wy.  
+Use is permitted under the **Planitaria License – Wy Edition**, which requires:
+- Attribution when used
+- No rebranding of core engine or UI
+- Freedom for users to create and monetize their own Planits and Planitae
+
+See `LICENSE.txt` for full terms.
+
+---
+
+## 📎 RELATED FILES
+- `README.md`
+- `readme_Chloe.md` *(for internal AI-only use)*
+- `planitaria.meta.json`
+- `chloe.delta.json`
+- `roadmap.txt`
+- `LICENSE.txt`
+
+---
+
+## 🔄 VERSION HISTORY
+```json
+[
+  { "version": "139", "date": "2025-05-22" },
+  { "version": "140", "date": "2025-05-24" },
+  { "version": "141", "date": "2025-05-24" },
+  { "version": "142", "date": "2025-05-24" }
+]
+```
