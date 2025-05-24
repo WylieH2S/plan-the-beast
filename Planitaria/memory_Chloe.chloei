@@ -1,0 +1,128 @@
+# memory_Chloe.chloei
+> Project: Planitaria
+> Owner: Wy
+> AI Assistant: Chloe
+> Created: 2025-05-12
+> Last Updated: 2025-05-24T14:22:59.043996Z
+> Continuity Version: 2.1
+> Format: Markdown + Embedded JSON
+
+---
+
+## 🧾 IDENTITY
+This is the AI continuity memory file for the Planitaria project.
+It is designed to allow any AI, including future instances of Chloe, to reconstruct, maintain, and develop Planitaria exactly as envisioned by its creator, Wy.
+
+This file contains metadata, development logs, design rationale, rebuild protocols, licensing, and historical context.
+
+---
+
+## 🧱 CORE METADATA
+```json
+{
+  "projectName": "Planitaria",
+  "owner": "Wy",
+  "startDate": "2025-05-12",
+  "engineVersion": "0.9-dev",
+  "modules": [
+    "Canvas",
+    "StencilLoader",
+    "InspectorPanel",
+    "SaveLoad",
+    "OverlaySystem",
+    "TutorialEngine"
+  ],
+  "activeGamepacks": ["Satisfactory"],
+  "saveSystem": {
+    "type": "Planits",
+    "format": "compressed+encoded",
+    "includes": ["layout", "metadata", "AI context", "notes"],
+    "encryptionSupport": true,
+    "storageTarget": ["local file", "SD card (Planitae cartridge)"]
+  }
+}
+```
+
+---
+
+## 🗓️ LOGS (AI INTERPRETABLE)
+```
+[2025-05-12T14:10Z] Project initiated by Wy. Goal: browser-based planner for Satisfactory with Draw.io-like UX.
+[2025-05-15T19:23Z] Planits defined as unit of save/load logic. Save system initiated.
+[2025-05-18T21:44Z] Save/Load merged with Inspector Panel. Overlay and flow visualization logic scaffolded.
+[2025-05-22T17:00Z] Planitaria License – Wy Edition formalized. Attribution and IP protections applied.
+[2025-05-24T13:56Z] Discussion initiated on AI-continuity memory architecture.
+[2025-05-24T14:20Z] First `memory_Chloe.chloei` file created to enable full continuity from a single file.
+```
+
+---
+
+## 🧭 REBUILD PROTOCOL
+```json
+{
+  "requirements": [
+    "Canvas.js",
+    "Inspector.js",
+    "SaveLoad.js",
+    "Tray.js",
+    "Gamepack.js",
+    "Tutorial.js",
+    "main.js",
+    "index.html"
+  ],
+  "dependencies": ["React", "Zustand", "shadcn/ui"],
+  "entry": "index.html",
+  "style": "dark mode, ethereal minimalism, green/blue/yellow/purple accents",
+  "planitaeSupport": true,
+  "ui": {
+    "modularPanels": true,
+    "safeZones": true,
+    "snappingUI": true,
+    "tooltips": true
+  },
+  "instructions": [
+    "Extract archive to root folder",
+    "Open index.html in browser (offline-ready)",
+    "Ensure Planitaria loads Satisfactory pack by default",
+    "All configurations reside inside Planitaria/ directory"
+  ]
+}
+```
+
+---
+
+## 🔐 OWNERSHIP + LICENSE
+- Planitaria, Planitae, Planits, and all related concepts and branding are the intellectual property of Wy.
+- This engine may be freely used, modified, and redistributed under the Planitaria License – Wy Edition.
+- See LICENSE.txt for terms and usage conditions.
+- Users must provide credit when showcasing or publishing content made with Planitaria.
+
+---
+
+## 🔁 VERSION HISTORY
+```json
+[
+  {
+    "version": "Planitaria 139",
+    "date": "2025-05-22",
+    "hash": "placeholder_hash_139"
+  },
+  {
+    "version": "Planitaria 140",
+    "date": "2025-05-24",
+    "hash": "placeholder_hash_140"
+  }
+]
+```
+
+---
+
+## 📎 ATTACHMENTS
+- `README.md`
+- `readme_Chloe.md`
+- `LICENSE.txt`
+- `planitaria.meta.json`
+- `chloe.delta.json`
+- `roadmap.txt`
+
+This file must be included in every archive and project drop under the name: `memory_Chloe.chloei`
